@@ -9,10 +9,12 @@ export default defineComponent({
   components: { Header, DataTable, NavigationButtons },
   data() {
     return {
-      fields: [],
-      data: [],
+      fields: null,
+      data: null,
       page: ref(1),
       limit: 10,
+      apiURL:
+        "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/incendios-forestales",
     };
   },
   mounted() {
@@ -23,7 +25,8 @@ export default defineComponent({
   methods: {
     getFields() {
       fetch(
-        "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/incendios-forestales?timezone=UTC&include_links=false&include_app_metas=false"
+        this.apiURL +
+          "?timezone=UTC&include_links=false&include_app_metas=false"
       )
         .then((response) => response.json())
         .then((data) => {
@@ -36,7 +39,8 @@ export default defineComponent({
     },
     getRecords() {
       fetch(
-        "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/incendios-forestales/records?limit=" +
+        this.apiURL +
+          "/records?limit=" +
           this.limit +
           "&offset=" +
           (this.page - 1) * 10 +
@@ -69,8 +73,8 @@ export default defineComponent({
     Get fields
   </button> -->
 
-  <div class="mt-10 p-4">
-    <div class="text-center w-full">
+  <div class="mt-10 p-4" v-if="fields && data">
+    <div class="text-center w-full" v-if="data != null">
       <div>Total de registros: {{ data.total_count }}</div>
       <div>Página {{ page }} de {{ Math.ceil(data.total_count / limit) }}</div>
 
@@ -80,7 +84,7 @@ export default defineComponent({
       />
     </div>
 
-    <div v-if="fields.length > 0">
+    <div>
       <!-- <div v-for="(field, index) in fields">
         {{ field.name }}
       </div> -->

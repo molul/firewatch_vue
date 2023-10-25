@@ -11,9 +11,8 @@
 <script lang="ts">
 export default {
   name: "NavigationButton",
+  components: {},
   props: {
-    functionName: "",
-    amount: 0,
     label: "",
   },
 };

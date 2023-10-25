@@ -15,7 +15,8 @@
       <tbody>
         <tr v-for="(record, i) in data.results" :key="i">
           <DataCell
-            v-for="(field, index) in fields"
+            v-for="(field, j) in fields"
+            :key="j"
             :data="record[field.name]"
           />
         </tr>
@@ -31,8 +32,8 @@ export default {
   name: "DataTable",
   components: { DataCell },
   props: {
-    fields: [],
-    data: [],
+    fields: null,
+    data: null,
   },
 };
 </script>
