@@ -1,9 +1,9 @@
 Description
-
+-----------
 A client requests a SPA from us to show real-time information about the forest fires detected in Castilla y León (Spain) during the last two years. To do this, we use an open data API from: https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/console
 
 Basic requirements:
-	-Show a table with as much data as possible that the open API can provide.
+	-(DONE) Show a table with as much data as possible that the open API can provide.
 	-The data table will have filters that will allow the user to display information filtered by: Province, probable cause, Current situation, Maximum level reached.
 	-This application must contain an interactive map to geo-position the fires.
 
@@ -12,13 +12,13 @@ Evaluable requirements:
 	-The application will have data entry to search for nearby fires (e.g. 10km radius) at given GPS coordinates (latitude and longitude).
 
 BONUS requirements:
-	-Develop code using Vue.js
-	-Deploy the webapp on a free server
-	-The componentization of the interface will be positively valued so that it can be integrated into other SPAs.
+	-(DONE) Develop code using Vue.js
+	-(DONE) Deploy the webapp on a free server
+	-(DONE) The componentization of the interface will be positively valued so that it can be integrated into other SPAs.
 	-Project/code documentation
 	-Some unitary tests
 
 Delivery:
-	Delivering the code within the first 48 hours after the beggining of the test will be very positively valued
-	Use the link down below to send the code repository where it is hosted (GitHub, GitLab...)
-	The code will need to be documented so that it can be compiled and tested on a web server. You don't need to include personal API keys in your code.
+	-Delivering the code within the first 48 hours after the beggining of the test will be very positively valued
+	-Use the link down below to send the code repository where it is hosted (GitHub, GitLab...)
+	-The code will need to be documented so that it can be compiled and tested on a web server. You don't need to include personal API keys in your code.

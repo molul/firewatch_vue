@@ -18,6 +18,7 @@
             v-for="(field, j) in fields"
             :key="j"
             :data="record[field.name]"
+            :fieldName="field.name"
           />
         </tr>
       </tbody>

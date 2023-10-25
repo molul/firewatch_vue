@@ -42,7 +42,7 @@ export default defineComponent({
     getRecords() {
       fetch(
         this.apiURL +
-          "/records?limit=" +
+          "/records?order_by=fecha_inicio%20desc%2C%20hora_ini%20desc%2C%20provincia%20asc&limit=" +
           this.limit +
           "&offset=" +
           (this.page - 1) * 10 +
@@ -71,10 +71,6 @@ export default defineComponent({
 
 <template>
   <Header />
-  <!-- <button @click="getFields" class="bg-sky-600 p-2 text-white">
-    Get fields
-  </button> -->
-
   <div class="mt-10 p-4" v-if="fields && data">
     <div class="text-center w-full" v-if="data != null">
       <div>Total de registros: {{ totalCount }}</div>
@@ -87,7 +83,7 @@ export default defineComponent({
     </div>
 
     <div>
-      <!-- <div v-for="(field, index) in fields">
+      <!-- <div v-for="(field, index) in fields" :key="index">
         {{ field.name }}
       </div> -->
       <DataTable :fields="fields" :data="data" />
