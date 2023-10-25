@@ -50,12 +50,10 @@ export default defineComponent({
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           this.data = data;
           this.totalCount = data.total_count;
-          this.numPages = Math.ceil(data.totalCount / this.limit);
-          // return data.fields;
-          // console.log(this.fields);
+          this.numPages = Math.ceil(data.total_count / 10);
         })
         .catch((error) => console.log(error));
     },
