@@ -1,30 +1,62 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+<script lang="ts">
+import { defineComponent } from "vue";
+import Header from "./components/Header.vue";
+import DataTable from "./components/DataTable.vue";
+
+export default defineComponent({
+  name: "App",
+  components: { Header, DataTable },
+  data() {
+    return {
+      fields: [],
+      data: [],
+    };
+  },
+  mounted() {
+    this.getFields();
+    this.getRecords();
+  },
+
+  methods: {
+    getFields() {
+      fetch(
+        "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/incendios-forestales?timezone=UTC&include_links=false&include_app_metas=false"
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          // console.log(data.fields);
+          this.fields = data.fields;
+          // return data.fields;
+          // console.log(this.fields);
+        })
+        .catch((error) => console.log(error));
+    },
+    getRecords() {
+      fetch(
+        "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/incendios-forestales/records?limit=10&offset=0&timezone=UTC&include_links=false&include_app_metas=false"
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          this.data = data;
+          // return data.fields;
+          // console.log(this.fields);
+        })
+        .catch((error) => console.log(error));
+    },
+  },
+});
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
-</template>
+  <Header />
+  <button @click="getFields" class="bg-sky-600 p-2 text-white">
+    Get fields
+  </button>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+  <div class="mt-10 p-4">
+    <div v-if="fields.length > 0">
+      <DataTable :fields="fields" :data="data" />
+    </div>
+  </div>
+</template>
