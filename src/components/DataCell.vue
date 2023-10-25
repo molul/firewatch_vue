@@ -1,5 +1,5 @@
 <template>
-  <td class="border border-slate-400 p-2">
+  <td class="border border-slate-400 p-2 text-sm">
     {{ data ? data : "N/D" }}
   </td>
 </template>

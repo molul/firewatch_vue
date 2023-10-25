@@ -21,7 +21,6 @@
         </tr>
       </tbody>
     </table>
-    Total de registros: {{ data.total_count }}
   </div>
 </template>
 
