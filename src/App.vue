@@ -13,6 +13,8 @@ export default defineComponent({
       data: null,
       page: ref(1),
       limit: 10,
+      totalCount: 0,
+      numPages: 0,
       apiURL:
         "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/incendios-forestales",
     };
@@ -50,6 +52,8 @@ export default defineComponent({
         .then((data) => {
           console.log(data);
           this.data = data;
+          this.totalCount = data.total_count;
+          this.numPages = Math.ceil(data.totalCount / this.limit);
           // return data.fields;
           // console.log(this.fields);
         })
@@ -75,8 +79,8 @@ export default defineComponent({
 
   <div class="mt-10 p-4" v-if="fields && data">
     <div class="text-center w-full" v-if="data != null">
-      <div>Total de registros: {{ data.total_count }}</div>
-      <div>Página {{ page }} de {{ Math.ceil(data.total_count / limit) }}</div>
+      <div>Total de registros: {{ totalCount }}</div>
+      <div>Página {{ page }} de {{ numPages }}</div>
 
       <NavigationButtons
         @decrease-page="(n) => decreasePage(n)"
