@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import Header from "./components/Header.vue";
 import DataTable from "./components/DataTable.vue";
 
@@ -10,6 +10,7 @@ export default defineComponent({
     return {
       fields: [],
       data: [],
+      page: ref(0),
     };
   },
   mounted() {
@@ -33,7 +34,9 @@ export default defineComponent({
     },
     getRecords() {
       fetch(
-        "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/incendios-forestales/records?limit=10&offset=0&timezone=UTC&include_links=false&include_app_metas=false"
+        "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/incendios-forestales/records?limit=10&offset=" +
+          "0" +
+          "&timezone=UTC&include_links=false&include_app_metas=false"
       )
         .then((response) => response.json())
         .then((data) => {
@@ -54,8 +57,13 @@ export default defineComponent({
     Get fields
   </button>
 
+  <button type="button" @click="page++">page is {{ page }}</button>
+
   <div class="mt-10 p-4">
     <div v-if="fields.length > 0">
+      <!-- <div v-for="(field, index) in fields">
+        {{ field.name }}
+      </div> -->
       <DataTable :fields="fields" :data="data" />
     </div>
   </div>

@@ -13,13 +13,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td
+        <tr v-for="(record, i) in data.results" :key="i">
+          <DataCell
             v-for="(field, index) in fields"
-            class="border border-slate-400 p-2"
-          >
-            {{ index }}
-          </td>
+            :data="record[field.name]"
+          />
         </tr>
       </tbody>
     </table>
@@ -28,8 +26,11 @@
 </template>
 
 <script lang="ts">
+import DataCell from "./DataCell.vue";
+
 export default {
   name: "DataTable",
+  components: { DataCell },
   props: {
     fields: [],
     data: [],
