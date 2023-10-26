@@ -1,14 +1,20 @@
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import { provinces } from "../data/provinces";
+import { defineComponent, ref, PropType } from "vue";
 
 export default defineComponent({
   name: "DropDown",
+
+  props: {
+    // Define the 'items' prop to receive the object array from the parent
+    data: {
+      type: Array as PropType<{ value: string; label: string }[]>,
+      required: true,
+    },
+    label: String,
+  },
+
   setup() {
     const selected = ref("");
-
-    return { selected, provinces };
-
     return {
       selected,
     };
@@ -17,17 +23,14 @@ export default defineComponent({
 </script>
 
 <template>
-  <!-- <span> Provincia: {{ selected }}</span> -->
-
-  <select v-model="selected" class="p-2 rounded border border-zinc-400">
-    <option disabled value="">Provincia</option>
-    <option
-      v-for="(province, index) in provinces"
-      :key="index"
-      :value="province.value"
-      @change="$emit('callback')"
-    >
-      {{ province.label }}
+  <select
+    v-model="selected"
+    @change="$emit('hasChanged', selected)"
+    class="p-2 rounded border border-zinc-400"
+  >
+    <option disabled value="">{{ label }}</option>
+    <option v-for="(item, index) in data" :key="index" :value="item.value">
+      {{ item.label }}
     </option>
   </select>
 </template>

@@ -9,9 +9,9 @@ export const getFields = () => {
 
   const loadFields = async () => {
     try {
-      let data = await fetch(
-        apiURL + "?timezone=UTC&include_links=false&include_app_metas=false"
-      );
+      let query =
+        apiURL + "?timezone=UTC&include_links=false&include_app_metas=false";
+      let data = await fetch(query);
       if (!data) {
         throw Error("no data");
       }
@@ -32,28 +32,40 @@ export const getRecords = () => {
   const totalCount = ref(0);
   const numPages = ref(0);
 
-  const loadRecords = async (page: number, limit: number) => {
+  const loadRecords = async (filters: {
+    page: number;
+    limit: number;
+    provincia: string;
+    situacion: string;
+  }) => {
+    console.log("SITUACION: " + filters.situacion);
     // console.log(page);
     try {
-      let data = await fetch(
+      let query =
         apiURL +
-          "/records?order_by=fecha_inicio%20desc%2C%20hora_ini%20desc%2C%20provincia%20asc&limit=" +
-          limit +
-          "&offset=" +
-          (page - 1) * 10 +
-          "&timezone=UTC&include_links=false&include_app_metas=false"
-      );
+        "/records?order_by=fecha_inicio%20desc%2C%20hora_ini%20desc%2C%20provincia%20asc&limit=" +
+        filters.limit +
+        "&offset=" +
+        (filters.page - 1) * 10 +
+        "&timezone=UTC&include_links=false&include_app_metas=false";
+
+      if (filters.situacion !== "") {
+        query += "&where=situacion_actual=%27" + filters.situacion + "%27";
+      }
+
+      // console.log(query);
+      let data = await fetch(query);
       if (!data) {
         throw Error("no data");
       }
       const recordsData = await data.json();
       records.value = recordsData.results;
       totalCount.value = recordsData.total_count;
-      numPages.value = Math.ceil(totalCount.value / limit);
+      numPages.value = Math.ceil(totalCount.value / filters.limit);
       // console.log(records.value);
     } catch (err) {
       // error.value = err;
-      console.log(recordsError.value);
+      // console.log(recordsError.value);
     }
   };
 
