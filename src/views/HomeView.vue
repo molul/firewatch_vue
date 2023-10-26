@@ -242,8 +242,8 @@ export default defineComponent({
 
         <div class="overflow-scroll">
           <!-- <div v-for="(field, index) in fields" :key="index">
-        {{ field }}
-      </div> -->
+            {{ field }}
+          </div> -->
           <DataTable :fields="fields" :records="records" />
         </div>
       </div>

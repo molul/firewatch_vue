@@ -4,18 +4,9 @@ NEXT:
 
 	------------------------------
 
-	CONVERTIR TODO A COMPOSITION API
-	Poner todos los scripts arriba
-
-	Google Maps API: 
-		https://www.youtube.com/watch?v=m4ad3eEFhAo
-		https://www.npmjs.com/package/@googlemaps/js-api-loader
-		https://developers.google.com/maps/documentation/javascript/custom-markers?hl=es-419
-
 	LocalStorage
 
 	Mostrar incendios en X km a la redonda
-		Inputs con longitud y latitud
 		function calcularDistancia(lat1, lon1, lat2, lon2) {
 			const radioTierra = 6371; // Radio medio de la Tierra en kilómetros
 			const dLat = (lat2 - lat1) * (Math.PI / 180);
@@ -46,6 +37,7 @@ NEXT:
 	---------------------------------
 
 	EXTRAS CUANDO TENGA TODO
+		Componentizar bien todo
 		OpenMaps?
 		Iconos para botones
 		ScrollToTop
@@ -54,16 +46,11 @@ NEXT:
 
 ----------------------------------------------------
 
-Basic requirements:
-	-This application must contain an interactive map to geo-position the fires.
-
 Evaluable requirements:
 	-The user will be able to store the configuration of selected filters in the browser's local storage.
 	-The application will have data entry to search for nearby fires (e.g. 10km radius) at given GPS coordinates (latitude and longitude).
 
 BONUS requirements:
-	-(DONE) Develop code using Vue.js
-	-(DONE) Deploy the webapp on a free server
-	-(DONE) The componentization of the interface will be positively valued so that it can be integrated into other SPAs.
+	-The componentization of the interface will be positively valued so that it can be integrated into other SPAs.
 	-Project/code documentation
 	-Some unitary tests
