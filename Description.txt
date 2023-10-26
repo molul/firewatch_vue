@@ -4,7 +4,11 @@ A client requests a SPA from us to show real-time information about the forest f
 
 Basic requirements:
 	-(DONE) Show a table with as much data as possible that the open API can provide.
-	-The data table will have filters that will allow the user to display information filtered by: Province, probable cause, Current situation, Maximum level reached.
+	-The data table will have filters that will allow the user to display information filtered by: 
+		Province, 
+		probable cause, 
+		Current situation, 
+		Maximum level reached.
 	-This application must contain an interactive map to geo-position the fires.
 
 Evaluable requirements:

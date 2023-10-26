@@ -1,4 +1,5 @@
 <template>
+  <!-- {{ console.log(fields) }} -->
   <div v-if="fields.length > 0">
     <table class="table-auto border-collapse">
       <thead>
@@ -13,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(record, i) in data.results" :key="i">
+        <tr v-for="(record, i) in records" :key="i">
           <DataCell
             v-for="(field, j) in fields"
             :key="j"
@@ -34,7 +35,7 @@ export default {
   components: { DataCell },
   props: {
     fields: null,
-    data: null,
+    records: null,
   },
 };
 </script>

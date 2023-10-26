@@ -1,4 +1,11 @@
-API: https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/console
+NEXT:
+	CONVERTIR TODO A COMPOSITION API
+
+	Hacer los dropdowns para seleccionar provincia, etc
+
+	Google Maps API: https://www.youtube.com/watch?v=m4ad3eEFhAo
+
+
 
 Basic requirements:
 	-Show a table with as much data as possible that the open API can provide.

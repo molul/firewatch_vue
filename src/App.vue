@@ -3,67 +3,45 @@ import { defineComponent, ref } from "vue";
 import Header from "./components/Header.vue";
 import DataTable from "./components/DataTable.vue";
 import NavigationButtons from "./components/NavigationButtons.vue";
+import { getFields, getRecords } from "./composables/fetchData";
 
 export default defineComponent({
   name: "App",
   components: { Header, DataTable, NavigationButtons },
-  data() {
+  setup() {
+    const data = null;
+    const page = ref(1);
+    const limit = 50;
+
+    const { fields, fieldsError, loadFields } = getFields();
+    const { records, totalCount, numPages, recordsError, loadRecords } =
+      getRecords();
+
+    loadFields();
+    loadRecords(1, limit);
+
     return {
-      fields: null,
-      data: null,
-      page: ref(1),
-      limit: 10,
-      totalCount: 0,
-      numPages: 0,
-      apiURL:
-        "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/incendios-forestales",
+      fields,
+      fieldsError,
+      loadFields,
+      loadRecords,
+      records,
+      recordsError,
+      data,
+      page,
+      limit,
+      totalCount,
+      numPages,
     };
   },
-  mounted() {
-    this.getFields();
-    this.getRecords();
-  },
-
   methods: {
-    getFields() {
-      fetch(
-        this.apiURL +
-          "?timezone=UTC&include_links=false&include_app_metas=false"
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          // console.log(data.fields);
-          this.fields = data.fields;
-          // return data.fields;
-          // console.log(this.fields);
-        })
-        .catch((error) => console.log(error));
-    },
-    getRecords() {
-      fetch(
-        this.apiURL +
-          "/records?order_by=fecha_inicio%20desc%2C%20hora_ini%20desc%2C%20provincia%20asc&limit=" +
-          this.limit +
-          "&offset=" +
-          (this.page - 1) * 10 +
-          "&timezone=UTC&include_links=false&include_app_metas=false"
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          // console.log(data);
-          this.data = data;
-          this.totalCount = data.total_count;
-          this.numPages = Math.ceil(data.total_count / 10);
-        })
-        .catch((error) => console.log(error));
-    },
     increasePage(n: number) {
-      this.page += n;
-      this.getRecords();
+      this.page = this.page + n < this.numPages ? this.page + n : this.numPages;
+      this.loadRecords(this.page, this.limit);
     },
     decreasePage(n: number) {
       this.page = this.page - n > 1 ? this.page - n : 1;
-      this.getRecords();
+      this.loadRecords(this.page, this.limit);
     },
   },
 });
@@ -71,8 +49,8 @@ export default defineComponent({
 
 <template>
   <Header />
-  <div class="mt-10 p-4" v-if="fields && data">
-    <div class="text-center w-full" v-if="data != null">
+  <div class="mt-10 p-4" v-if="fields && records">
+    <div class="text-center w-full" v-if="records != null">
       <div>Total de registros: {{ totalCount }}</div>
       <div>Página {{ page }} de {{ numPages }}</div>
 
@@ -86,7 +64,7 @@ export default defineComponent({
       <!-- <div v-for="(field, index) in fields" :key="index">
         {{ field.name }}
       </div> -->
-      <DataTable :fields="fields" :data="data" />
+      <DataTable :fields="fields" :records="records" />
     </div>
   </div>
 </template>
