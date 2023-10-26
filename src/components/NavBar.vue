@@ -12,7 +12,7 @@
           }"
         >
           <router-link
-            class="bg-black bg-opacity-20 block font-bold uppercase font-condensed text-md md:text-md lg:text-2xl px-4 py-2"
+            class="bg-black bg-opacity-20 block font-bold uppercase font-condensed px-4 py-2"
             :to="item.link"
             >{{ item.label }}</router-link
           >
@@ -25,13 +25,12 @@
 <script lang="ts">
 export default {
   name: "NavBar",
-  data() {
-    return {
-      navigationItems: [
-        { label: "Incendios", link: "/" },
-        { label: "Mapa", link: "/mapa" },
-      ],
-    };
+  setup() {
+    const navigationItems = [
+      { label: "Incendios", link: "/" },
+      { label: "Mapa", link: "/mapa" },
+    ];
+    return { navigationItems };
   },
 };
 </script>

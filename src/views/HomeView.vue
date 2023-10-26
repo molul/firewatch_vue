@@ -5,14 +5,16 @@ import DataTable from "../components/DataTable.vue";
 import NavigationButtons from "../components/NavigationButtons.vue";
 import { getFields, getRecords } from "../composables/fetchData";
 import Title from "../components/Title.vue";
+import Dropdown from "../components/Dropdown.vue";
 
 export default defineComponent({
   name: "HomeView",
-  components: { DataTable, NavigationButtons, Title },
+  components: { DataTable, NavigationButtons, Title, Dropdown },
   setup() {
     const data = null;
     const page = ref(1);
     const limit = ref(20);
+    const selected = ref(0);
 
     const { fields, fieldsError, loadFields } = getFields();
     const { records, totalCount, numPages, recordsError, loadRecords } =
@@ -35,6 +37,7 @@ export default defineComponent({
     });
 
     return {
+      selected,
       fields,
       fieldsError,
       loadFields,
@@ -56,6 +59,7 @@ export default defineComponent({
 <template>
   <Title text="Incendios" />
   <div class="mt-10 p-4" v-if="fields && records">
+    <div><Dropdown :selected="{ selected }" /></div>
     <div class="text-center w-full" v-if="records != null">
       <div class="flex items-center justify-between flex-wrap">
         <div>

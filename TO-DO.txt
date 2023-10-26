@@ -4,6 +4,8 @@ NEXT:
 
 	CONVERTIR TODO A COMPOSITION API
 
+	Poner todos los scripts arriba
+
 	Iconos para botones
 	
 	Hacer los dropdowns para seleccionar provincia, etc
