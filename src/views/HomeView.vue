@@ -210,7 +210,7 @@ export default defineComponent({
         >
           <div style="text-align: center" class="">
             <img
-              src="fire.png"
+              src="../assets/fire.png"
               width="25"
               height="25"
               style="margin-top: 0px"

@@ -1,6 +1,5 @@
 NEXT:
 	BUGS:
-		Uncaught (in promise) InvalidValueError: Map: Expected mapDiv of type HTMLElement but was passed null.
 
 	------------------------------
 
@@ -25,7 +24,6 @@ NEXT:
 		// Ejemplo de uso
 		const distancia = calcularDistancia(40.7128, -74.0060, 34.0522, -118.2437);
 		console.log("La distancia es " + distancia + " km");
-
 
 
 	DOCUMENTACIÓN:
