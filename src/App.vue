@@ -12,10 +12,10 @@ export default defineComponent({
   name: "App",
   components: { Header, DataTable, NavigationButtons },
   setup() {
-    const { coords } = useGeolocation();
+    // const { coords } = useGeolocation();
     const currPos = computed(() => ({
-      lat: coords.value.latitude,
-      lng: coords.value.longitude,
+      lat: 40.31,
+      lng: -3.48,
     }));
 
     const loader = new Loader({
@@ -28,14 +28,32 @@ export default defineComponent({
       // @ts-ignore
       const map = new google.maps.Map(mapDiv.value, {
         center: currPos.value,
-        zoom: 7,
+        zoom: 4,
       });
       // @ts-ignore
-      new google.maps.Marker({
-        position: currPos.value,
-        map,
-        title: "Hello World!",
-      });
+      // new google.maps.Marker({
+      //   position: currPos.value,
+      //   map,
+      //   title: "Hello World!",
+      // });
+
+      const fires = [
+        {
+          // @ts-ignore
+          position: new google.maps.LatLng(39.49, -0.36),
+          type: "info",
+        },
+      ];
+
+      // Create markers.
+      for (let i = 0; i < fires.length; i++) {
+        // @ts-ignore
+        const marker = new google.maps.Marker({
+          position: fires[i].position,
+          icon: "fire.png",
+          map: map,
+        });
+      }
     });
     // console.log(import.meta.env.VITE_GOOGLE_MAPS_API_KEY);
 
@@ -82,13 +100,9 @@ export default defineComponent({
 <template>
   <Header />
   <div class="mt-10 p-4" v-if="fields && records">
-    <img src="./assets/fire.png" />
-
     <div>
-      <h4>Position</h4>
-      Latitude: {{ currPos.lat.toFixed(2) }}, Longitude:
-      {{ currPos.lng.toFixed(2) }}
-      <div ref="mapDiv" style="width: 100%; height: 80vh" />
+      <h4>Mapa de incendios</h4>
+      <div ref="mapDiv" class="w-full h-96" />
     </div>
 
     <div class="text-center w-full" v-if="records != null">
