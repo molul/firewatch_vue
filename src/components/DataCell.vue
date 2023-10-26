@@ -1,5 +1,5 @@
 <template>
-  <td class="border border-slate-400 p-2 text-sm" :class="className">
+  <td class="p-2 text-sm" :class="className">
     {{ formattedData ? formattedData : "-" }}
   </td>
 </template>
@@ -14,11 +14,11 @@ export default {
   computed: {
     className() {
       if (this.fieldName === "situacion_actual") {
-        if (this.data === "ACTIVO") return "bg-red-400";
-        if (this.data === "CONTROLADO") return "bg-yellow-400";
-        if (this.data === "EXTINGUIDO") return "bg-green-400";
+        if (this.data === "ACTIVO") return "bg-red-300";
+        if (this.data === "CONTROLADO") return "bg-yellow-300";
+        if (this.data === "EXTINGUIDO") return "bg-green-300";
       }
-      return "";
+      return "bg-sky-200";
     },
     formattedData() {
       if (this.data) {
@@ -33,7 +33,7 @@ export default {
             }
           }
         } catch (error) {
-          console.log(JSON.stringify(this.data));
+          // console.log(JSON.stringify(this.data));
           console.log(error);
         }
       } else {

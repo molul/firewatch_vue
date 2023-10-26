@@ -1,13 +1,19 @@
 <template>
   <!-- {{ console.log(fields) }} -->
-  <div v-if="fields.length > 0">
-    <table class="table-auto border-collapse">
-      <thead>
+  <div v-if="fields.length > 0" class="">
+    <table
+      class="table-auto border-separate border-tools-table-outline rounded-md border-zinc-400 border-2"
+    >
+      <thead class="">
         <tr>
           <th
             v-for="(field, index) in fields"
             :key="index"
-            class="bg-zinc-300 border border-slate-400 p-2 text-sm align-top"
+            class="bg-zinc-600 text-white p-2 text-sm align-top"
+            :class="{
+              'rounded-tl-md': index === 0,
+              'rounded-tr-md': index === fields.length - 1,
+            }"
           >
             {{ field.label }}
           </th>
@@ -20,6 +26,11 @@
             :key="j"
             :data="record[field.name]"
             :fieldName="field.name"
+            :class="{
+              'rounded-bl-md': i === records.length - 1 && j === 0,
+              'rounded-br-md':
+                i === records.length - 1 && j === fields.length - 1,
+            }"
           />
         </tr>
       </tbody>
