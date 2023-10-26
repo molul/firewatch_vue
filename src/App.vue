@@ -22,6 +22,9 @@ export default defineComponent({
     loadFields();
     loadRecords(1, limit);
 
+    // @ts-ignore
+    let markers: any[] = [];
+
     const currPos = computed(() => ({
       lat: 40.31,
       lng: -3.48,
@@ -36,32 +39,35 @@ export default defineComponent({
     // let map = ref(null);
     onMounted(async () => {
       await loader.load();
-      // @ts-ignore
-      map.value = new google.maps.Map(mapDiv.value, {
-        center: currPos.value,
-        zoom: 6,
-      });
-
-      const firePositions = toRaw(records.value) as any;
-      const fires = [];
-
-      if (firePositions && firePositions) {
-        for (let i = 0; i < firePositions.length; i++) {
-          const firePos = firePositions[i].posicion;
-          // @ts-ignore
-          const marker = new google.maps.LatLng(firePos.lat, firePos.lon);
-          fires.push(marker);
-        }
-      }
-
-      // Create markers.
-      for (let i = 0; i < fires.length; i++) {
+      if (mapDiv) {
         // @ts-ignore
-        const marker = new google.maps.Marker({
-          position: fires[i],
-          icon: "fire.png",
-          map: map.value,
+        map.value = new google.maps.Map(mapDiv.value, {
+          center: currPos.value,
+          zoom: 6,
         });
+
+        const firePositions = toRaw(records.value) as any;
+
+        if (firePositions && firePositions) {
+          for (let i = 0; i < firePositions.length; i++) {
+            const firePos = firePositions[i].posicion;
+            // @ts-ignore
+            const marker = new google.maps.LatLng(firePos.lat, firePos.lon);
+            markers.push(marker);
+          }
+        }
+
+        // Create markers.
+        for (let i = 0; i < markers.length; i++) {
+          // @ts-ignore
+          const marker = new google.maps.Marker({
+            position: markers[i],
+            icon: "fire.png",
+            map: map.value,
+          });
+        }
+      } else {
+        console.log("NULAZO");
       }
     });
 
@@ -85,10 +91,41 @@ export default defineComponent({
     increasePage(n: number) {
       this.page = this.page + n < this.numPages ? this.page + n : this.numPages;
       this.loadRecords(this.page, this.limit);
+      this.updateMap();
     },
     decreasePage(n: number) {
       this.page = this.page - n > 1 ? this.page - n : 1;
       this.loadRecords(this.page, this.limit);
+    },
+    updateMap() {
+      if (this.records) {
+        const records = this.records as any;
+        const firePositions = toRaw(records);
+
+        const fires = [];
+
+        if (firePositions) {
+          for (let i = 0; i < firePositions.length; i++) {
+            const firePos = firePositions[i].posicion;
+            if (firePos) {
+              // @ts-ignore
+              const marker = new google.maps.LatLng(firePos.lat, firePos.lon);
+              fires.push(marker);
+            }
+          }
+        }
+
+        // Create markers.
+        for (let i = 0; i < fires.length; i++) {
+          console.log(firePositions);
+          // @ts-ignore
+          const marker = new google.maps.Marker({
+            position: fires[i],
+            icon: "fire.png",
+            map: this.$refs.map,
+          });
+        }
+      }
     },
   },
 });
@@ -98,11 +135,13 @@ export default defineComponent({
   <Header />
   <div class="mt-10 p-4" v-if="fields && records">
     <div>
-      <h4>Mapa de incendios</h4>
+      <h4 class="text-center text-5xl font-bold uppercase mb-8">
+        Mapa de incendios
+      </h4>
       <div ref="mapDiv" class="w-full h-[500px]" />
     </div>
 
-    <div class="text-center w-full" v-if="records != null">
+    <div class="text-center w-full my-4" v-if="records != null">
       <div>Total de registros: {{ totalCount }}</div>
       <div>Página {{ page }} de {{ numPages }}</div>
 
