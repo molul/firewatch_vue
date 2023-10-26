@@ -5,24 +5,22 @@ NEXT:
 	------------------------------
 
 	CONVERTIR TODO A COMPOSITION API
-
-	provincia, causa_probable
-
 	Poner todos los scripts arriba
-
-	
-	Hacer los dropdowns para seleccionar provincia, etc
 
 	Google Maps API: 
 		https://www.youtube.com/watch?v=m4ad3eEFhAo
 		https://www.npmjs.com/package/@googlemaps/js-api-loader
 		https://developers.google.com/maps/documentation/javascript/custom-markers?hl=es-419
 
+	LocalStorage
 
+	Inputs con longitud y latitud
 
 	DOCUMENTACIÓN:
 		Al lanzar la aplicación, te pedirá permiso para ubicarte. Acepta.
 		En MacOS tendrás que hacerlo en preferencias del sistema
+
+	TESTS UNITARIOS
 
 
 	EXTRAS CUANDO TENGA TODO
@@ -31,10 +29,10 @@ NEXT:
 		Fuente chula
 		Info y Navigation buttons a componente aislado, arriba y abajo, col y col-reverse
 
+----------------------------------------------------
+
 Basic requirements:
-	-(DONE) Show a table with as much data as possible that the open API can provide.
-	-The data table will have filters that will allow the user to display information filtered by: Province, probable cause, Current situation, Maximum level reached.
-	-(HALF DONE) This application must contain an interactive map to geo-position the fires.
+	-This application must contain an interactive map to geo-position the fires.
 
 Evaluable requirements:
 	-The user will be able to store the configuration of selected filters in the browser's local storage.

@@ -1,14 +1,3 @@
-<template>
-  <td
-    class="p-2 text-sm"
-    :class="{
-      'whitespace-nowrap': fieldName === 'posicion',
-    }"
-  >
-    {{ formattedData ? formattedData : "-" }}
-  </td>
-</template>
-
 <script lang="ts">
 export default {
   name: "DataTable",
@@ -43,4 +32,13 @@ export default {
 };
 </script>
 
-<style></style>
+<template>
+  <td
+    class="p-2 text-sm"
+    :class="{
+      'whitespace-nowrap': fieldName === 'posicion',
+    }"
+  >
+    {{ formattedData ? formattedData : "-" }}
+  </td>
+</template>

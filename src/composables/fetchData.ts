@@ -40,7 +40,7 @@ export const getRecords = () => {
     nivel: string;
     causa: string;
   }) => {
-    console.log("causa: " + filters.causa);
+    // console.log("causa: " + filters.causa);
     // console.log(page);
     try {
       let query =
@@ -51,6 +51,9 @@ export const getRecords = () => {
         (filters.page - 1) * 10 +
         "&timezone=UTC&include_links=false&include_app_metas=false";
 
+      if (filters.provincia !== "") {
+        query += "&where=provincia%20LIKE%20%27" + filters.provincia + "%27";
+      }
       if (filters.situacion !== "") {
         query += "&where=situacion_actual=%27" + filters.situacion + "%27";
       }
