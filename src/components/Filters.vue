@@ -4,6 +4,7 @@ import Dropdown from "../components/Dropdown.vue";
 import { provinces } from "../data/provinces";
 import { situations } from "../data/situations";
 import { levels } from "../data/levels";
+import { causes } from "../data/causes";
 
 export default defineComponent({
   name: "Filters",
@@ -12,6 +13,7 @@ export default defineComponent({
     const selectedProvince = ref("");
     const selectedCurrentSituation = ref("");
     const selectedLevel = ref("");
+    const selectedCause = ref("");
     // const reloadRecords = (field: string, value: string) => {
     //   console.log(field, value);
     // };
@@ -22,6 +24,8 @@ export default defineComponent({
       situations,
       levels,
       selectedLevel,
+      causes,
+      selectedCause,
     };
   },
 });
@@ -57,6 +61,15 @@ export default defineComponent({
       @hasChanged="
         (value) =>
           $emit('callback', { field: 'nivel_maximo_alcanzado', value: value })
+      "
+    />
+
+    <Dropdown
+      :selected="{ selectedCause }"
+      :data="causes"
+      label="Causa probable"
+      @hasChanged="
+        (value) => $emit('callback', { field: 'causa_probable', value: value })
       "
     />
   </div>

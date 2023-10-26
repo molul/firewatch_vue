@@ -17,6 +17,7 @@ export default defineComponent({
     const provincia = ref("");
     const situacion = ref("");
     const nivel = ref("");
+    const causa = ref("");
 
     const { fields, fieldsError, loadFields } = getFields();
     const { records, totalCount, numPages, recordsError, loadRecords } =
@@ -40,6 +41,7 @@ export default defineComponent({
         provincia: provincia.value,
         situacion: situacion.value,
         nivel: nivel.value,
+        causa: causa.value,
       });
     };
 
@@ -53,6 +55,9 @@ export default defineComponent({
       }
       if (data.field === "nivel_maximo_alcanzado") {
         nivel.value = data.value;
+      }
+      if (data.field === "causa_probable") {
+        causa.value = data.value;
       }
       triggerLoadRecords();
       // console.log("qweqweqwe");
@@ -82,6 +87,7 @@ export default defineComponent({
       reloadRecords,
       triggerLoadRecords,
       nivel,
+      causa,
     };
   },
 });

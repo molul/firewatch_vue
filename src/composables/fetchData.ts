@@ -38,8 +38,9 @@ export const getRecords = () => {
     provincia: string;
     situacion: string;
     nivel: string;
+    causa: string;
   }) => {
-    console.log("NIVEL: " + filters.nivel);
+    console.log("causa: " + filters.causa);
     // console.log(page);
     try {
       let query =
@@ -55,8 +56,11 @@ export const getRecords = () => {
       }
       if (filters.nivel !== "") {
         query += "&where=nivel=%27" + filters.nivel + "%27";
-        console.log("NIVEL: " + filters.nivel);
       }
+      if (filters.causa !== "") {
+        query += "&where=causa_probable%20LIKE%20%27" + filters.causa + "%27";
+      }
+      // "&where=causa_probable%20LIKE%20%27NEGLIGENCIAS%27"
 
       // console.log(query);
       let data = await fetch(query);
