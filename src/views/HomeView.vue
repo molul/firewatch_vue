@@ -16,6 +16,7 @@ export default defineComponent({
     const limit = ref(20);
     const provincia = ref("");
     const situacion = ref("");
+    const nivel = ref("");
 
     const { fields, fieldsError, loadFields } = getFields();
     const { records, totalCount, numPages, recordsError, loadRecords } =
@@ -24,21 +25,21 @@ export default defineComponent({
     const increasePage = (n: number) => {
       page.value =
         page.value + n < numPages.value ? page.value + n : numPages.value;
-      loadRecords({
-        page: page.value,
-        limit: limit.value,
-        provincia: provincia.value,
-        situacion: situacion.value,
-      });
+      triggerLoadRecords();
     };
 
     const decreasePage = (n: number) => {
       page.value = page.value - n > 1 ? page.value - n : 1;
+      triggerLoadRecords();
+    };
+
+    const triggerLoadRecords = () => {
       loadRecords({
         page: page.value,
         limit: limit.value,
         provincia: provincia.value,
         situacion: situacion.value,
+        nivel: nivel.value,
       });
     };
 
@@ -46,29 +47,20 @@ export default defineComponent({
       // console.log("data ", data);
       if (data.field === "provincia") {
         provincia.value = data.value;
-        // console.log(provincia.value);
       }
       if (data.field === "situacion_actual") {
         situacion.value = data.value;
-        // console.log(situacion.value);
       }
-      loadRecords({
-        page: page.value,
-        limit: limit.value,
-        provincia: provincia.value,
-        situacion: situacion.value,
-      });
+      if (data.field === "nivel_maximo_alcanzado") {
+        nivel.value = data.value;
+      }
+      triggerLoadRecords();
       // console.log("qweqweqwe");
     };
 
     onMounted(() => {
       loadFields();
-      loadRecords({
-        page: page.value,
-        limit: limit.value,
-        provincia: provincia.value,
-        situacion: situacion.value,
-      });
+      triggerLoadRecords();
     });
 
     return {
@@ -88,6 +80,8 @@ export default defineComponent({
       increasePage,
       decreasePage,
       reloadRecords,
+      triggerLoadRecords,
+      nivel,
     };
   },
 });

@@ -37,8 +37,9 @@ export const getRecords = () => {
     limit: number;
     provincia: string;
     situacion: string;
+    nivel: string;
   }) => {
-    console.log("SITUACION: " + filters.situacion);
+    console.log("NIVEL: " + filters.nivel);
     // console.log(page);
     try {
       let query =
@@ -51,6 +52,10 @@ export const getRecords = () => {
 
       if (filters.situacion !== "") {
         query += "&where=situacion_actual=%27" + filters.situacion + "%27";
+      }
+      if (filters.nivel !== "") {
+        query += "&where=nivel=%27" + filters.nivel + "%27";
+        console.log("NIVEL: " + filters.nivel);
       }
 
       // console.log(query);

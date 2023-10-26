@@ -1,4 +1,5 @@
 export const provinces = [
+  { label: "Todas", value: "" },
   { label: "Álava", value: "ÁLAVA" },
   { label: "Albacete", value: "ALBACETE" },
   { label: "Alicante", value: "ALICANTE" },

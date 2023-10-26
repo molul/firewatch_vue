@@ -3,6 +3,7 @@ import { defineComponent, ref } from "vue";
 import Dropdown from "../components/Dropdown.vue";
 import { provinces } from "../data/provinces";
 import { situations } from "../data/situations";
+import { levels } from "../data/levels";
 
 export default defineComponent({
   name: "Filters",
@@ -10,6 +11,7 @@ export default defineComponent({
   setup() {
     const selectedProvince = ref("");
     const selectedCurrentSituation = ref("");
+    const selectedLevel = ref("");
     // const reloadRecords = (field: string, value: string) => {
     //   console.log(field, value);
     // };
@@ -18,6 +20,8 @@ export default defineComponent({
       provinces,
       selectedCurrentSituation,
       situations,
+      levels,
+      selectedLevel,
     };
   },
 });
@@ -35,6 +39,7 @@ export default defineComponent({
         (value) => $emit('callback', { field: 'provincia', value: value })
       "
     />
+
     <Dropdown
       :selected="{ selectedCurrentSituation }"
       :data="situations"
@@ -42,6 +47,16 @@ export default defineComponent({
       @hasChanged="
         (value) =>
           $emit('callback', { field: 'situacion_actual', value: value })
+      "
+    />
+
+    <Dropdown
+      :selected="{ selectedLevel }"
+      :data="levels"
+      label="Nivel máximo"
+      @hasChanged="
+        (value) =>
+          $emit('callback', { field: 'nivel_maximo_alcanzado', value: value })
       "
     />
   </div>

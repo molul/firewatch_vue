@@ -2,11 +2,14 @@ NEXT:
 	BUGS:
 		Uncaught (in promise) InvalidValueError: Map: Expected mapDiv of type HTMLElement but was passed null.
 
+	------------------------------
+
 	CONVERTIR TODO A COMPOSITION API
+
+	provincia, causa_probable
 
 	Poner todos los scripts arriba
 
-	Iconos para botones
 	
 	Hacer los dropdowns para seleccionar provincia, etc
 
@@ -23,6 +26,7 @@ NEXT:
 
 
 	EXTRAS CUANDO TENGA TODO
+		Iconos para botones
 		ScrollToTop
 		Fuente chula
 		Info y Navigation buttons a componente aislado, arriba y abajo, col y col-reverse
