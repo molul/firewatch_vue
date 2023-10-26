@@ -32,12 +32,10 @@ export default defineComponent({
           nivel: selectedLevel.value,
           causa: selectedCause.value,
         };
-        console.log(datos);
-        // 	// Convertir el objeto a una cadena JSON
-        // const datosJSON = JSON.stringify(datos);
 
-        // // Guardar los datos en el localStorage
-        // localStorage.setItem("mydatos", datosJSON);
+        const datosJSON = JSON.stringify(datos);
+
+        localStorage.setItem(nombreFiltro.value, datosJSON);
       }
     };
 
