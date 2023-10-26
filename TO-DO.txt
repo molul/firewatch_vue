@@ -14,7 +14,28 @@ NEXT:
 
 	LocalStorage
 
-	Inputs con longitud y latitud
+	Mostrar incendios en X km a la redonda
+		Inputs con longitud y latitud
+		function calcularDistancia(lat1, lon1, lat2, lon2) {
+			const radioTierra = 6371; // Radio medio de la Tierra en kilómetros
+			const dLat = (lat2 - lat1) * (Math.PI / 180);
+			const dLon = (lon2 - lon1) * (Math.PI / 180);
+
+			const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+				Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
+				Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+			const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+			const distancia = radioTierra * c;
+
+			return distancia;
+		}
+
+		// Ejemplo de uso
+		const distancia = calcularDistancia(40.7128, -74.0060, 34.0522, -118.2437);
+		console.log("La distancia es " + distancia + " km");
+
+
 
 	DOCUMENTACIÓN:
 		Al lanzar la aplicación, te pedirá permiso para ubicarte. Acepta.
@@ -22,8 +43,10 @@ NEXT:
 
 	TESTS UNITARIOS
 
+	---------------------------------
 
 	EXTRAS CUANDO TENGA TODO
+		OpenMaps?
 		Iconos para botones
 		ScrollToTop
 		Fuente chula

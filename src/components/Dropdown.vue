@@ -5,7 +5,6 @@ export default defineComponent({
   name: "DropDown",
 
   props: {
-    // Define the 'items' prop to receive the object array from the parent
     data: {
       type: Array as PropType<{ value: string; label: string }[]>,
       required: true,

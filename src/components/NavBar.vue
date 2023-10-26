@@ -1,3 +1,16 @@
+<script lang="ts">
+export default {
+  name: "NavBar",
+  setup() {
+    const navigationItems = [
+      { label: "Incendios", link: "/" },
+      { label: "Mapa", link: "/mapa" },
+    ];
+    return { navigationItems };
+  },
+};
+</script>
+
 <template>
   <nav>
     <div class="flex justify-center">
@@ -21,18 +34,3 @@
     </div>
   </nav>
 </template>
-
-<script lang="ts">
-export default {
-  name: "NavBar",
-  setup() {
-    const navigationItems = [
-      { label: "Incendios", link: "/" },
-      { label: "Mapa", link: "/mapa" },
-    ];
-    return { navigationItems };
-  },
-};
-</script>
-
-<style></style>

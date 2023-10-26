@@ -6,11 +6,24 @@ import NavigationButtons from "../components/NavigationButtons.vue";
 import { getFields, getRecords } from "../composables/fetchData";
 import Title from "../components/Title.vue";
 import Filters from "../components/Filters.vue";
+import { GoogleMap, Marker, CustomMarker, Circle } from "vue3-google-map";
 
 export default defineComponent({
   name: "HomeView",
-  components: { DataTable, NavigationButtons, Title, Filters },
+  components: {
+    DataTable,
+    NavigationButtons,
+    Title,
+    Filters,
+    GoogleMap,
+    Marker,
+    Circle,
+    CustomMarker,
+  },
   setup() {
+    //------------------------------------
+    // Records variables
+    //------------------------------------
     const data = null;
     const page = ref(1);
     const limit = ref(20);
@@ -23,6 +36,9 @@ export default defineComponent({
     const { records, totalCount, numPages, recordsError, loadRecords } =
       getRecords();
 
+    //------------------------------------
+    // Records methods
+    //------------------------------------
     const increasePage = (n: number) => {
       page.value =
         page.value + n < numPages.value ? page.value + n : numPages.value;
@@ -68,6 +84,42 @@ export default defineComponent({
       triggerLoadRecords();
     });
 
+    //------------------------------------
+    // Google Maps variables
+    //------------------------------------
+    const markers = ref(null);
+
+    const radiusKm = ref(10);
+    const latitud = ref(41.4);
+    const longitud = ref(-4.25);
+    const center = ref({ lat: latitud.value, lng: longitud.value });
+    const googleMapsKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
+    const circle = ref({
+      center: center.value,
+      radius: radiusKm.value * 1000,
+      strokeColor: "#FF0000",
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: "#FF0000",
+      fillOpacity: 0.35,
+    });
+
+    //------------------------------------
+    // Records methods
+    //------------------------------------
+    const updateCircle = () => {
+      circle.value = {
+        center: { lat: +latitud.value, lng: +longitud.value },
+        radius: radiusKm.value * 1000,
+        strokeColor: "#FF0000",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#FF0000",
+        fillOpacity: 0.35,
+      };
+    };
+
     return {
       fields,
       fieldsError,
@@ -88,36 +140,113 @@ export default defineComponent({
       triggerLoadRecords,
       nivel,
       causa,
+      markers,
+      circle,
+      radiusKm,
+      googleMapsKey,
+      updateCircle,
+      latitud,
+      longitud,
+      center,
     };
   },
 });
 </script>
 
 <template>
-  <Title text="Incendios" />
-  <div class="mt-10 p-4" v-if="fields && records">
+  <div class="space-y-20">
     <div>
-      <Filters @callback="(values) => reloadRecords(values)" />
+      <Title text="Mapa" />
+      <div class="p-4 flex gap-8 justify-center">
+        <div class="flex gap-4 items-center">
+          <div>Radio</div>
+          <div>
+            <input
+              class="p-2 rounded border border-zinc-400 w-20"
+              type="text"
+              ref="myInput"
+              v-model="radiusKm"
+              @input="updateCircle"
+            />
+          </div>
+        </div>
+        <div class="flex gap-4 items-center">
+          <div>Longitud</div>
+          <div>
+            <input
+              class="p-2 rounded border border-zinc-400 w-20"
+              type="text"
+              ref="myInput"
+              v-model="longitud"
+              @input="updateCircle"
+            />
+          </div>
+        </div>
+        <div class="flex gap-4 items-center">
+          <div>Latitud</div>
+          <div>
+            <input
+              class="p-2 rounded border border-zinc-400 w-20"
+              type="text"
+              ref="myInput"
+              v-model="latitud"
+              @input="updateCircle"
+            />
+          </div>
+        </div>
+      </div>
+      <GoogleMap
+        :api-key="googleMapsKey"
+        style="width: 100%; height: 500px"
+        :center="center"
+        :zoom="6.5"
+      >
+        <Circle :options="circle" />
+        <CustomMarker
+          :options="{
+            position: center,
+            anchorPoint: 'BOTTOM_CENTER',
+          }"
+        >
+          <div style="text-align: center" class="">
+            <img
+              src="fire.png"
+              width="25"
+              height="25"
+              style="margin-top: 0px"
+            />
+          </div>
+        </CustomMarker>
+      </GoogleMap>
     </div>
-    <div class="text-center w-full" v-if="records != null">
-      <div class="flex items-center justify-between flex-wrap">
+
+    <div class="">
+      <Title text="Datos de incendios" />
+      <div class="mt-10 p-4" v-if="fields && records">
         <div>
-          Página {{ page }} de {{ numPages }} - Total registros:
-          {{ totalCount }}
+          <Filters @callback="(values) => reloadRecords(values)" />
+        </div>
+        <div class="text-center w-full" v-if="records != null">
+          <div class="flex items-center justify-between flex-wrap">
+            <div>
+              Página {{ page }} de {{ numPages }} - Total registros:
+              {{ totalCount }}
+            </div>
+
+            <NavigationButtons
+              @decrease-page="(n) => decreasePage(n)"
+              @increase-page="(n) => increasePage(n)"
+            />
+          </div>
         </div>
 
-        <NavigationButtons
-          @decrease-page="(n) => decreasePage(n)"
-          @increase-page="(n) => increasePage(n)"
-        />
-      </div>
-    </div>
-
-    <div class="overflow-scroll">
-      <!-- <div v-for="(field, index) in fields" :key="index">
+        <div class="overflow-scroll">
+          <!-- <div v-for="(field, index) in fields" :key="index">
         {{ field }}
       </div> -->
-      <DataTable :fields="fields" :records="records" />
+          <DataTable :fields="fields" :records="records" />
+        </div>
+      </div>
     </div>
   </div>
 </template>

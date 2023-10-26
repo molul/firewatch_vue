@@ -14,9 +14,7 @@ export default defineComponent({
     const selectedCurrentSituation = ref("");
     const selectedLevel = ref("");
     const selectedCause = ref("");
-    // const reloadRecords = (field: string, value: string) => {
-    //   console.log(field, value);
-    // };
+
     return {
       selectedProvince,
       provinces,
@@ -32,7 +30,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="flex gap-2 items-center">
+  <div class="flex gap-2 items-center justify-center flex-wrap">
     <div>Filtros:</div>
     <!-- <span> Provincia: {{ selected }}</span> -->
     <Dropdown
