@@ -4,8 +4,8 @@ NEXT:
 
 	CONVERTIR TODO A COMPOSITION API
 
-	GeoLocation ya no hará falta
-
+	Iconos para botones
+	
 	Hacer los dropdowns para seleccionar provincia, etc
 
 	Google Maps API: 
