@@ -1,14 +1,22 @@
 <template>
-  <h1
-    class="text-3xl font-bold text-center bg-zinc-700 text-white py-4 shadow-lg"
+  <div
+    class="flex justify-between bg-secondary items-center shadow-xl px-4 py-4"
   >
-    PRUEBA CESEFOR LUIS MORCILLO
-  </h1>
+    <div class="flex space-x-4 items-center">
+      <img src="logo_cesefor.webp" alt="logo cesefor" class="h-10" />
+      <h1 class="text-3xl font-bold text-white py-4">
+        PRUEBA LUIS MORCILLO LUQUE
+      </h1>
+    </div>
+    <NavBar />
+  </div>
 </template>
 
 <script lang="ts">
+import NavBar from "./NavBar.vue";
 export default {
   name: "Header",
+  components: { NavBar },
 };
 </script>
 

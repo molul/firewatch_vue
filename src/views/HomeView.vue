@@ -4,10 +4,11 @@ import { defineComponent, ref, onMounted } from "vue";
 import DataTable from "../components/DataTable.vue";
 import NavigationButtons from "../components/NavigationButtons.vue";
 import { getFields, getRecords } from "../composables/fetchData";
+import Title from "../components/Title.vue";
 
 export default defineComponent({
   name: "HomeView",
-  components: { DataTable, NavigationButtons },
+  components: { DataTable, NavigationButtons, Title },
   setup() {
     const data = null;
     const page = ref(1);
@@ -53,15 +54,20 @@ export default defineComponent({
 </script>
 
 <template>
+  <Title text="Incendios" />
   <div class="mt-10 p-4" v-if="fields && records">
-    <div class="text-center w-full my-4" v-if="records != null">
-      <div>Total de registros: {{ totalCount }}</div>
-      <div>Página {{ page }} de {{ numPages }}</div>
+    <div class="text-center w-full" v-if="records != null">
+      <div class="flex items-center justify-between flex-wrap">
+        <div>
+          Página {{ page }} de {{ numPages }} - Total registros:
+          {{ totalCount }}
+        </div>
 
-      <NavigationButtons
-        @decrease-page="(n) => decreasePage(n)"
-        @increase-page="(n) => increasePage(n)"
-      />
+        <NavigationButtons
+          @decrease-page="(n) => decreasePage(n)"
+          @increase-page="(n) => increasePage(n)"
+        />
+      </div>
     </div>
 
     <div class="overflow-scroll">

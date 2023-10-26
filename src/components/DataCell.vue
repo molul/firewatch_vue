@@ -1,5 +1,10 @@
 <template>
-  <td class="p-2 text-sm" :class="className">
+  <td
+    class="p-2 text-sm"
+    :class="{
+      'whitespace-nowrap': fieldName === 'posicion',
+    }"
+  >
     {{ formattedData ? formattedData : "-" }}
   </td>
 </template>
@@ -12,14 +17,6 @@ export default {
     fieldName: null,
   },
   computed: {
-    className() {
-      if (this.fieldName === "situacion_actual") {
-        if (this.data === "ACTIVO") return "bg-red-300";
-        if (this.data === "CONTROLADO") return "bg-yellow-300";
-        if (this.data === "EXTINGUIDO") return "bg-green-300";
-      }
-      return "bg-sky-200";
-    },
     formattedData() {
       if (this.data) {
         try {
@@ -27,7 +24,9 @@ export default {
             return this.data;
           } else if (this.data != null && typeof this.data === "object") {
             if (this.data.lon) {
-              return "LON: " + this.data.lon + " - LAT: " + this.data.lat;
+              const lon = Math.round(this.data.lon * 100) / 100;
+              const lat = Math.round(this.data.lat * 100) / 100;
+              return "[" + lon + ", " + lat + "]";
             } else {
               return this.data.join();
             }

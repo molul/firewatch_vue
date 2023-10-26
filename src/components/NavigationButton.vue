@@ -1,11 +1,13 @@
 <template>
-  <button
-    type="button"
-    @click="$emit('callback')"
-    class="bg-sky-700 hover:bg-sky-600 transition-colors text-white px-4 py-2 rounded"
-  >
-    {{ label }}
-  </button>
+  <div class="p-2 bg-primary rounded">
+    <button
+      type="button"
+      @click="$emit('callback')"
+      class="bg-black bg-opacity-20 hover:bg-opacity-40 transition-colors text-white font-bold px-2 py-2 rounded"
+    >
+      {{ label }}
+    </button>
+  </div>
 </template>
 
 <script lang="ts">

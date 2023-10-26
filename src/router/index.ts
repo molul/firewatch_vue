@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import MapView from "../views/MapView.vue";
 
 const routes = [
   {
@@ -7,17 +8,17 @@ const routes = [
     name: "home",
     component: HomeView,
   },
-  // {
-  //   path: "/map",
-  //   name: "map",
-  //   component: MapView,
-  // },
+  {
+    path: "/mapa",
+    name: "mapa",
+    component: MapView,
+  },
 ];
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior() {
     // always scroll to top
     return { top: 0 };
   },

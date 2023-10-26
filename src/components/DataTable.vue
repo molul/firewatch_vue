@@ -1,36 +1,35 @@
 <template>
   <!-- {{ console.log(fields) }} -->
   <div v-if="fields.length > 0" class="">
-    <table
-      class="table-auto border-separate border-tools-table-outline rounded-md border-zinc-400 border-2"
-    >
-      <thead class="">
+    <table class="table-auto">
+      <thead class="border-b border-zinc-700">
         <tr>
           <th
             v-for="(field, index) in fields"
             :key="index"
-            class="bg-zinc-600 text-white p-2 text-sm align-top"
-            :class="{
-              'rounded-tl-md': index === 0,
-              'rounded-tr-md': index === fields.length - 1,
-            }"
+            class="bg-white whitespace-nowrap text-zinc-700 px-4 py-3 text-sm align-top"
           >
             {{ field.label }}
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(record, i) in records" :key="i">
+        <tr
+          v-for="(record, i) in records"
+          :key="i"
+          :class="{
+            'bg-opacity-50': i % 2 === 0,
+            'bg-opacity-70': i % 2 === 1,
+            'bg-red-400': record['situacion_actual'] === 'ACTIVO',
+            'bg-orange-400': record['situacion_actual'] === 'CONTROLADO',
+            'bg-green-400': record['situacion_actual'] === 'EXTINGUIDO',
+          }"
+        >
           <DataCell
             v-for="(field, j) in fields"
             :key="j"
             :data="record[field.name]"
             :fieldName="field.name"
-            :class="{
-              'rounded-bl-md': i === records.length - 1 && j === 0,
-              'rounded-br-md':
-                i === records.length - 1 && j === fields.length - 1,
-            }"
           />
         </tr>
       </tbody>
