@@ -1,62 +1,16 @@
 <script lang="ts">
 /* eslint-disable no-undef */
-import { defineComponent, ref, computed, onMounted } from "vue";
+import { defineComponent, ref, computed, onMounted, toRaw } from "vue";
 import Header from "./components/Header.vue";
 import DataTable from "./components/DataTable.vue";
 import NavigationButtons from "./components/NavigationButtons.vue";
 import { getFields, getRecords } from "./composables/fetchData";
-import { useGeolocation } from "./composables/useGeolocation";
 import { Loader } from "@googlemaps/js-api-loader";
 
 export default defineComponent({
   name: "App",
   components: { Header, DataTable, NavigationButtons },
   setup() {
-    // const { coords } = useGeolocation();
-    const currPos = computed(() => ({
-      lat: 40.31,
-      lng: -3.48,
-    }));
-
-    const loader = new Loader({
-      apiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-    });
-    const mapDiv = ref(null);
-    // let map = ref(null);
-    onMounted(async () => {
-      await loader.load();
-      // @ts-ignore
-      const map = new google.maps.Map(mapDiv.value, {
-        center: currPos.value,
-        zoom: 4,
-      });
-      // @ts-ignore
-      // new google.maps.Marker({
-      //   position: currPos.value,
-      //   map,
-      //   title: "Hello World!",
-      // });
-
-      const fires = [
-        {
-          // @ts-ignore
-          position: new google.maps.LatLng(39.49, -0.36),
-          type: "info",
-        },
-      ];
-
-      // Create markers.
-      for (let i = 0; i < fires.length; i++) {
-        // @ts-ignore
-        const marker = new google.maps.Marker({
-          position: fires[i].position,
-          icon: "fire.png",
-          map: map,
-        });
-      }
-    });
-    // console.log(import.meta.env.VITE_GOOGLE_MAPS_API_KEY);
-
     const data = null;
     const page = ref(1);
     const limit = 50;
@@ -67,6 +21,49 @@ export default defineComponent({
 
     loadFields();
     loadRecords(1, limit);
+
+    const currPos = computed(() => ({
+      lat: 40.31,
+      lng: -3.48,
+    }));
+
+    const loader = new Loader({
+      apiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+    });
+    const mapDiv = ref(null);
+    let map = ref(null);
+
+    // let map = ref(null);
+    onMounted(async () => {
+      await loader.load();
+      // @ts-ignore
+      map.value = new google.maps.Map(mapDiv.value, {
+        center: currPos.value,
+        zoom: 6,
+      });
+
+      const firePositions = toRaw(records.value) as any;
+      const fires = [];
+
+      if (firePositions && firePositions) {
+        for (let i = 0; i < firePositions.length; i++) {
+          const firePos = firePositions[i].posicion;
+          // @ts-ignore
+          const marker = new google.maps.LatLng(firePos.lat, firePos.lon);
+          fires.push(marker);
+        }
+      }
+
+      // Create markers.
+      for (let i = 0; i < fires.length; i++) {
+        // @ts-ignore
+        const marker = new google.maps.Marker({
+          position: fires[i],
+          icon: "fire.png",
+          map: map.value,
+        });
+      }
+    });
 
     return {
       currPos,
@@ -102,7 +99,7 @@ export default defineComponent({
   <div class="mt-10 p-4" v-if="fields && records">
     <div>
       <h4>Mapa de incendios</h4>
-      <div ref="mapDiv" class="w-full h-96" />
+      <div ref="mapDiv" class="w-full h-[500px]" />
     </div>
 
     <div class="text-center w-full" v-if="records != null">

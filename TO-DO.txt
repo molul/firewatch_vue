@@ -1,5 +1,10 @@
 NEXT:
+	BUGS:
+		Uncaught (in promise) InvalidValueError: Map: Expected mapDiv of type HTMLElement but was passed null.
+
 	CONVERTIR TODO A COMPOSITION API
+
+	GeoLocation ya no hará falta
 
 	Hacer los dropdowns para seleccionar provincia, etc
 
@@ -7,6 +12,8 @@ NEXT:
 		https://www.youtube.com/watch?v=m4ad3eEFhAo
 		https://www.npmjs.com/package/@googlemaps/js-api-loader
 		https://developers.google.com/maps/documentation/javascript/custom-markers?hl=es-419
+
+
 
 	DOCUMENTACIÓN:
 		Al lanzar la aplicación, te pedirá permiso para ubicarte. Acepta.
