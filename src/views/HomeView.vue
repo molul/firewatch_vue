@@ -158,7 +158,7 @@ export default defineComponent({
     <div>
       <Title text="Mapa" />
       <div class="p-4 flex gap-8 justify-center">
-        <div class="flex gap-4 items-center">
+        <div class="flex gap-2 items-center">
           <div>Radio</div>
           <div>
             <input
@@ -170,7 +170,7 @@ export default defineComponent({
             />
           </div>
         </div>
-        <div class="flex gap-4 items-center">
+        <div class="flex gap-2 items-center">
           <div>Longitud</div>
           <div>
             <input
@@ -182,7 +182,7 @@ export default defineComponent({
             />
           </div>
         </div>
-        <div class="flex gap-4 items-center">
+        <div class="flex gap-2 items-center">
           <div>Latitud</div>
           <div>
             <input
