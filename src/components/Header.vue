@@ -3,7 +3,7 @@
     class="flex justify-between bg-secondary items-center shadow-xl px-4 py-4"
   >
     <div class="flex space-x-4 items-center">
-      <img src="logo_cesefor.webp" alt="logo cesefor" class="h-10" />
+      <img src="../assets/logo_cesefor.webp" alt="logo cesefor" class="h-10" />
       <h1 class="text-3xl font-bold text-white py-4">
         PRUEBA LUIS MORCILLO LUQUE
       </h1>
