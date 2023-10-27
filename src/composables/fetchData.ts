@@ -3,6 +3,11 @@ import { ref } from "vue";
 const apiURL =
   "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/incendios-forestales";
 
+interface Position {
+  lat: number;
+  lng: number;
+}
+
 export const useFields = () => {
   const fields = ref(null);
   const fieldsError = ref(null);
@@ -29,6 +34,7 @@ export const useFields = () => {
 
 export const getRecords = () => {
   const records = ref(null);
+  const markers = ref<Position[]>();
   const recordsError = ref(null);
   const totalCount = ref(0);
   const numPages = ref(0);
@@ -68,9 +74,8 @@ export const getRecords = () => {
         query += "&where=causa_probable%20LIKE%20%27" + filters.causa + "%27";
       }
       if (filters.radius) {
-        console.log("qwe");
         query +=
-          "&where=distance%28posicion%2C%20geom%27POINT%28" +
+          "&select=posicion&where=distance%28posicion%2C%20geom%27POINT%28" +
           filters.lon +
           "%20" +
           filters.lat +
@@ -78,12 +83,7 @@ export const getRecords = () => {
           filters.radius +
           "km%29";
       }
-      //
 
-      // distance(posicion, geom'POINT(-6 40)', 100km)
-      // "&where=causa_probable%20LIKE%20%27NEGLIGENCIAS%27"
-
-      // console.log(query);
       let data = await fetch(query);
       if (!data) {
         throw Error("no data");
@@ -92,6 +92,22 @@ export const getRecords = () => {
       records.value = recordsData.results;
       totalCount.value = recordsData.total_count;
       numPages.value = Math.ceil(totalCount.value / filters.limit);
+
+      if (filters.radius) {
+        // console.log(recordsData.results);
+        let auxMarkers: Position[] = [];
+        for (let i = 0; i < recordsData.results.length; i++) {
+          const record = recordsData.results[i];
+          console.log(record.posicion.lat);
+          const auxMarker = {
+            lat: record.posicion.lat,
+            lng: record.posicion.lon,
+          };
+          auxMarkers.push(auxMarker);
+        }
+        // console.log(aux);
+        markers.value = auxMarkers;
+      }
       // console.log(records.value);
     } catch (err) {
       console.log(err);
@@ -100,37 +116,5 @@ export const getRecords = () => {
     }
   };
 
-  return { records, totalCount, numPages, recordsError, loadRecords };
-};
-
-export const getFires = (radius: number, lat: number, lon: number) => {
-  let firesList = null;
-  // console.log(records);
-  const distance = calculateDistance(40.7128, -74.006, 34.0522, -118.2437);
-  console.log("La distancia es " + distance + " km");
-
-  return firesList;
-};
-
-export const calculateDistance = (
-  lat1: number,
-  lon1: number,
-  lat2: number,
-  lon2: number
-) => {
-  const earthRadius = 6371;
-  const dLat = (lat2 - lat1) * (Math.PI / 180);
-  const dLon = (lon2 - lon1) * (Math.PI / 180);
-
-  const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(lat1 * (Math.PI / 180)) *
-      Math.cos(lat2 * (Math.PI / 180)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
-
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  const distance = earthRadius * c;
-
-  return distance;
+  return { records, markers, totalCount, numPages, recordsError, loadRecords };
 };

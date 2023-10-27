@@ -31,11 +31,17 @@ export default defineComponent({
     const situacion = ref("");
     const nivel = ref("");
     const causa = ref("");
-    const fires = ref(null);
+    // const fires = ref(null);
 
     const { fields, fieldsError, loadFields } = useFields();
-    const { records, totalCount, numPages, recordsError, loadRecords } =
-      getRecords();
+    const {
+      records,
+      markers,
+      totalCount,
+      numPages,
+      recordsError,
+      loadRecords,
+    } = getRecords();
 
     //------------------------------------
     // Records methods
@@ -86,9 +92,8 @@ export default defineComponent({
     //------------------------------------
     // Google Maps variables
     //------------------------------------
-    const markers = ref(null);
 
-    const radiusKm = ref(10);
+    const radiusKm = ref(250);
     const latitud = ref(41.4);
     const longitud = ref(-4.25);
     const center = ref({ lat: latitud.value, lng: longitud.value });
@@ -118,9 +123,11 @@ export default defineComponent({
         fillOpacity: 0.35,
       };
     };
-    const handleUpdateRadius = () => {
+    const handleUpdateRadiusAndCoordinates = () => {
       updateCircle();
+
       triggerLoadRecords();
+      console.log(records.value);
     };
 
     //------------------------------------
@@ -156,11 +163,10 @@ export default defineComponent({
       radiusKm,
       googleMapsKey,
       updateCircle,
-      handleUpdateRadius,
+      handleUpdateRadiusAndCoordinates,
       latitud,
       longitud,
       center,
-      fires,
     };
   },
 });
@@ -168,22 +174,6 @@ export default defineComponent({
 
 <template>
   <div class="space-y-4 px-4">
-    <!-- Info and navigation -->
-    <div class="text-center w-full" v-if="records != null">
-      <div class="flex flex-col items-center justify-between flex-wrap">
-        <div>
-          Página {{ page }} de {{ numPages }} - Total registros:
-          {{ totalCount }}
-        </div>
-
-        <NavigationButtons
-          @decrease-page="(n) => decreasePage(n)"
-          @increase-page="(n) => increasePage(n)"
-        />
-      </div>
-    </div>
-
-    <!-- Map -->
     <div>
       <Title text="Mapa" />
       <div class="text-center">
@@ -199,7 +189,7 @@ export default defineComponent({
               type="text"
               ref="myInput"
               v-model="radiusKm"
-              @input="handleUpdateRadius"
+              @input="handleUpdateRadiusAndCoordinates"
             />
           </div>
         </div>
@@ -211,7 +201,7 @@ export default defineComponent({
               type="text"
               ref="myInput"
               v-model="longitud"
-              @input="updateCircle"
+              @input="handleUpdateRadiusAndCoordinates"
             />
           </div>
         </div>
@@ -223,11 +213,28 @@ export default defineComponent({
               type="text"
               ref="myInput"
               v-model="latitud"
-              @input="updateCircle"
+              @input="handleUpdateRadiusAndCoordinates"
             />
           </div>
         </div>
       </div>
+
+      <!-- Info and navigation -->
+      <div class="text-center w-full" v-if="records != null">
+        <div class="flex flex-col items-center justify-between flex-wrap">
+          <div>
+            Página {{ page }} de {{ numPages }} - Total registros:
+            {{ totalCount }}
+          </div>
+
+          <NavigationButtons
+            @decrease-page="(n) => decreasePage(n)"
+            @increase-page="(n) => increasePage(n)"
+          />
+        </div>
+      </div>
+
+      <!-- Map -->
       <GoogleMap
         :api-key="googleMapsKey"
         style="width: 100%; height: 500px"
@@ -236,8 +243,10 @@ export default defineComponent({
       >
         <Circle :options="circle" />
         <CustomMarker
+          v-for="(item, index) in markers"
+          :key="index"
           :options="{
-            position: center,
+            position: item,
             anchorPoint: 'BOTTOM_CENTER',
           }"
         >

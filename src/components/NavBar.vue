@@ -14,7 +14,7 @@ export default {
 
 <template>
   <nav>
-    <div class="flex justify-center my-8">
+    <div class="flex justify-center">
       <div class="flex bg-primary rounded-md p-2 space-x-1">
         <div
           class="hover:bg-opacity-20 transition duration-200 overflow-hidden"
