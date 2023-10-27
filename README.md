@@ -4,10 +4,12 @@ This Vue proyect was made for a technical test for Cesefor, a Spanish not-for-pr
 
 ## How to run it
 
-The app is available in [Vercel](https://cesefor-prueba-vue.vercel.app/). You can also clone it and build it typing the following commands:
+The app is available in [Vercel](https://cesefor-prueba-vue.vercel.app/). You can also clone it and build it typing the following commands in your console:
 
-cd <path-to-the-cloned-repo>
+cd [path-to-the-cloned-repo>]
+
 npm install
+
 npm run dev
 
 
