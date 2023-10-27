@@ -12,6 +12,8 @@ npm install
 
 npm run dev
 
+You will also have to define an environment variable for the Google Maps API key, named VITE_GOOGLE_MAPS_API_KEY.
+
 
 ## Recommended IDE Setup
 
