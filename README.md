@@ -1,12 +1,15 @@
-# Fire watches
+# Firewatch
 
 This Vue proyect was made for a technical test for Cesefor, a Spanish not-for-profit Foundation that promotes and provides funds for the Region Castilla y Leon while especially dealing with the forest sector, and its industry.
 
 ## How to run it
 
-The app is available in [Vercel](https://cesefor-prueba-vue.vercel.app/). You can also clone it and build it.
+The app is available in [Vercel](https://cesefor-prueba-vue.vercel.app/). You can also clone it and build it typing the following commands:
 
-1-
+cd <path-to-the-cloned-repo>
+npm install
+npm run dev
+
 
 ## Recommended IDE Setup
 
