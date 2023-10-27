@@ -1,9 +1,8 @@
 <script lang="ts">
-/* eslint-disable no-undef */
 import { defineComponent, ref, onMounted } from "vue";
 import DataTable from "../components/DataTable.vue";
 import NavigationButtons from "../components/NavigationButtons.vue";
-import { useFields, getRecords } from "../composables/fetchData";
+import { useFields, useRecords } from "../composables/fetchData";
 import Title from "../components/Title.vue";
 import Filters from "../components/Filters.vue";
 import { GoogleMap, Marker, CustomMarker, Circle } from "vue3-google-map";
@@ -21,9 +20,9 @@ export default defineComponent({
     CustomMarker,
   },
   setup() {
-    //------------------------------------
+    //******************************************
     // Records variables
-    //------------------------------------
+    //******************************************
     const data = null;
     const page = ref(1);
     const limit = ref(20);
@@ -34,22 +33,33 @@ export default defineComponent({
 
     const { fields, fieldsError, loadFields } = useFields();
     const { records, totalCount, numPages, recordsError, loadRecords } =
-      getRecords();
+      useRecords();
+
+    //******************************************
+    // Records methods
+    //******************************************
 
     //------------------------------------
-    // Records methods
+    // increasePage/decreasePage
+    //------------------------------------
+    // These functions update the "page" variable
+    // and queries the database again for a new load of records
     //------------------------------------
     const increasePage = (n: number) => {
       page.value =
         page.value + n < numPages.value ? page.value + n : numPages.value;
       triggerLoadRecords();
     };
-
     const decreasePage = (n: number) => {
       page.value = page.value - n > 1 ? page.value - n : 1;
       triggerLoadRecords();
     };
 
+    //------------------------------------
+    // triggerLoadRecords
+    //------------------------------------
+    // Calls loadRecords again with the updated filters
+    //------------------------------------
     const triggerLoadRecords = () => {
       loadRecords({
         page: page.value,
@@ -61,8 +71,12 @@ export default defineComponent({
       });
     };
 
+    //------------------------------------
+    // reloadRecords
+    //------------------------------------
+    // Updates the corresponding variable and triggers a new query
+    //------------------------------------
     const reloadRecords = (data: { field: string; value: string }) => {
-      // console.log("data ", data);
       if (data.field === "provincia") {
         provincia.value = data.value;
       }
@@ -76,18 +90,15 @@ export default defineComponent({
         causa.value = data.value;
       }
       triggerLoadRecords();
-      // console.log("qweqweqwe");
     };
 
-    //------------------------------------
-    // OnMounted
-    //------------------------------------
+    //******************************************
+    // OnMounted: loads fields and records after
+    // the component is mounted
+    //******************************************
     onMounted(() => {
       loadFields();
       triggerLoadRecords();
-      console.log(records.value);
-      // fires.value = getFires(records);
-      // console.log(fires);
     });
 
     return {
@@ -119,9 +130,7 @@ export default defineComponent({
   <div class="space-y-4 px-4">
     <Title text="Datos de incendios" />
     <!-- Filters -->
-    <div>
-      <Filters @callback="(values) => reloadRecords(values)" />
-    </div>
+    <Filters @callback="(values) => reloadRecords(values)" />
 
     <!-- Info and navigation -->
     <div class="text-center w-full" v-if="records != null">
@@ -139,15 +148,8 @@ export default defineComponent({
     </div>
 
     <!-- Table -->
-    <div>
-      <div class="" v-if="fields && records">
-        <div class="overflow-scroll">
-          <!-- <div v-for="(field, index) in fields" :key="index">
-            {{ field }}
-          </div> -->
-          <DataTable :fields="fields" :records="records" />
-        </div>
-      </div>
+    <div v-if="fields && records" class="overflow-scroll">
+      <DataTable :fields="fields" :records="records" />
     </div>
   </div>
 </template>

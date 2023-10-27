@@ -5,8 +5,6 @@ import { provinces } from "../data/provinces";
 import { situations } from "../data/situations";
 import { levels } from "../data/levels";
 import { causes } from "../data/causes";
-// import TestDropDowns from "./TestDropdowns.vue";
-// import Parent from "./Parent.vue";
 
 interface Option {
   value: string;
@@ -17,12 +15,12 @@ export default defineComponent({
   name: "Filters",
   components: { Dropdown },
   setup() {
-    const selectedProvince = ref("BURGOS");
+    const selectedProvince = ref("");
     const selectedCurrentSituation = ref("");
     const selectedLevel = ref("");
     const selectedCause = ref("");
     const nombreFiltro = ref("");
-    const savePresetError = ref("");
+    const savePresetMessage = ref("");
 
     const filters = ref<Option[]>([]);
     const filterPreffix = "cfp_"; // that's "cesefor filter preset" ;)
@@ -32,30 +30,24 @@ export default defineComponent({
       selectedCause.value = value;
     };
 
-    const changeProvince = () => {
-      selectedProvince.value = "BURGOS";
-      console.log("qweqwe");
-    };
-
     const guardarFiltro = () => {
       if (nombreFiltro.value === "") {
-        savePresetError.value =
+        savePresetMessage.value =
           nombreFiltro.value === ""
             ? "Por favor, escriba un nombre para el filtro"
             : "";
       } else {
-        savePresetError.value = "";
-
+        savePresetMessage.value = "";
         if (
           selectedProvince.value === "" &&
           selectedCurrentSituation.value === "" &&
           selectedLevel.value === "" &&
           selectedCause.value === ""
         ) {
-          savePresetError.value =
+          savePresetMessage.value =
             "El preset no se ha guardado porque no se ha seleccionado ninguna opción en los filtros";
         } else {
-          savePresetError.value = "";
+          savePresetMessage.value = "";
           const datos = {
             provincia: selectedProvince.value,
             situacion: selectedCurrentSituation.value,
@@ -82,19 +74,14 @@ export default defineComponent({
         label: key,
         value: value,
       }));
-      // console.log(filters.value);
     };
 
     const loadFilter = (data: string) => {
       const options = JSON.parse(data);
-      console.log(options);
       selectedProvince.value = options.provincia;
       selectedCurrentSituation.value = options.situacion;
       selectedLevel.value = options.nivel;
       selectedCause.value = options.causa;
-      console.log("OPTIONS PROV: " + options.provincia);
-      console.log("OPTIONS CAUSA: " + options.causa);
-      console.log("SELECTPROV: " + selectedProvince.value);
     };
 
     onMounted(() => {
@@ -112,12 +99,11 @@ export default defineComponent({
       selectedCause,
       nombreFiltro,
       guardarFiltro,
-      savePresetError,
+      savePresetMessage,
       selectedFilter,
       filters,
       loadFilter,
       updateCause,
-      changeProvince,
     };
   },
 });
@@ -131,7 +117,6 @@ export default defineComponent({
       <!-- Filters -->
       <div class="flex gap-2 items-center justify-center flex-wrap">
         <div>Filtros:</div>
-        <!-- <span> Provincia: {{ selected }}</span> -->
         <Dropdown
           id="selectProvincia"
           :select="{ selectedProvince }"
@@ -139,7 +124,6 @@ export default defineComponent({
           label="Provincia"
           @hasChanged="
             (value) => {
-              console.log('qweqweqwe');
               selectedProvince = value;
               $emit('callback', { field: 'provincia', value: value });
             }
@@ -183,7 +167,6 @@ export default defineComponent({
           @hasChanged="
             (value) => {
               updateCause(value);
-              // selectedCause = value;
               $emit('callback', {
                 field: 'causa_probable',
                 value: value,
@@ -207,40 +190,19 @@ export default defineComponent({
           <div class="">
             <button
               @click="guardarFiltro"
-              class="bg-primary hover:bg-primary-light text-zinc-700 uppercase font-bold px-2 py-2 rounded transition-colors"
+              class="bg-primary hover:bg-primary-light text-secondary uppercase font-bold px-2 py-2 rounded transition-colors"
             >
               Guardar
             </button>
           </div>
         </div>
         <div
-          v-if="savePresetError"
+          v-if="savePresetMessage"
           class="flex justify-center text-red-600 font-bold"
         >
-          {{ savePresetError }}
+          {{ savePresetMessage }}
         </div>
       </div>
-      <!-- Load filter -->
-      <!-- <div class="flex justify-center items-center gap-2">
-        <Dropdown
-          :select="{ selectedFilter }"
-          :data="filters"
-          label="Cargar
-        filtro"
-          @hasChanged="
-            (value) => {
-              // console.log('qweqweqwe2');
-              selectedFilter = value;
-
-              loadFilter(value);
-            }
-          "
-        />
-      </div> -->
-      <!-- <Parent /> -->
-      <!-- <p>Selected Value: {{ selectedFilter }}</p> -->
-      <!-- <TestDropDowns /> -->
-      <!-- <button @click="changeProvince">CLICK</button> -->
     </div>
   </div>
 </template>

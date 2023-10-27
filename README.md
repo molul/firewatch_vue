@@ -1,6 +1,12 @@
-# Vue 3 + TypeScript + Vite
+# Fire watches
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This Vue proyect was made for a technical test for Cesefor, a Spanish not-for-profit Foundation that promotes and provides funds for the Region Castilla y Leon while especially dealing with the forest sector, and its industry.
+
+## How to run it
+
+The app is available in [Vercel](https://cesefor-prueba-vue.vercel.app/). You can also clone it and build it.
+
+1-
 
 ## Recommended IDE Setup
 

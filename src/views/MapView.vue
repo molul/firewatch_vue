@@ -1,9 +1,8 @@
 <script lang="ts">
-/* eslint-disable no-undef */
 import { defineComponent, ref, onMounted } from "vue";
 import DataTable from "../components/DataTable.vue";
 import NavigationButtons from "../components/NavigationButtons.vue";
-import { useFields, getRecords } from "../composables/fetchData";
+import { useFields, useRecords } from "../composables/fetchData";
 import Title from "../components/Title.vue";
 import Filters from "../components/Filters.vue";
 import { GoogleMap, Marker, CustomMarker, Circle } from "vue3-google-map";
@@ -21,9 +20,9 @@ export default defineComponent({
     CustomMarker,
   },
   setup() {
-    //------------------------------------
+    //******************************************
     // Records variables
-    //------------------------------------
+    //******************************************
     const data = null;
     const page = ref(1);
     const limit = ref(20);
@@ -31,7 +30,6 @@ export default defineComponent({
     const situacion = ref("");
     const nivel = ref("");
     const causa = ref("");
-    // const fires = ref(null);
 
     const { fields, fieldsError, loadFields } = useFields();
     const {
@@ -41,22 +39,33 @@ export default defineComponent({
       numPages,
       recordsError,
       loadRecords,
-    } = getRecords();
+    } = useRecords();
+
+    //******************************************
+    // Records methods
+    //******************************************
 
     //------------------------------------
-    // Records methods
+    // increasePage/decreasePage
+    //------------------------------------
+    // These functions update the "page" variable
+    // and queries the database again for a new load of records
     //------------------------------------
     const increasePage = (n: number) => {
       page.value =
         page.value + n < numPages.value ? page.value + n : numPages.value;
       triggerLoadRecords();
     };
-
     const decreasePage = (n: number) => {
       page.value = page.value - n > 1 ? page.value - n : 1;
       triggerLoadRecords();
     };
 
+    //------------------------------------
+    // triggerLoadRecords
+    //------------------------------------
+    // Calls loadRecords again with the updated filters
+    //------------------------------------
     const triggerLoadRecords = () => {
       loadRecords({
         page: page.value,
@@ -71,8 +80,12 @@ export default defineComponent({
       });
     };
 
+    //------------------------------------
+    // reloadRecords
+    //------------------------------------
+    // Updates the corresponding variable and triggers a new query
+    //------------------------------------
     const reloadRecords = (data: { field: string; value: string }) => {
-      // console.log("data ", data);
       if (data.field === "provincia") {
         provincia.value = data.value;
       }
@@ -86,13 +99,11 @@ export default defineComponent({
         causa.value = data.value;
       }
       triggerLoadRecords();
-      // console.log("qweqweqwe");
     };
 
-    //------------------------------------
+    //******************************************
     // Google Maps variables
-    //------------------------------------
-
+    //******************************************
     const radiusKm = ref(250);
     const latitud = ref(41.4);
     const longitud = ref(-4.25);
@@ -109,8 +120,16 @@ export default defineComponent({
       fillOpacity: 0.35,
     });
 
-    //------------------------------------
+    //******************************************
     // Google Maps methods
+    //******************************************
+
+    //------------------------------------
+    // updateCircle
+    //------------------------------------
+    // Updates the circle drawn on the Google map
+    // when either radius, latitude or longitude
+    // have changed
     //------------------------------------
     const updateCircle = () => {
       circle.value = {
@@ -123,16 +142,23 @@ export default defineComponent({
         fillOpacity: 0.35,
       };
     };
+
+    //------------------------------------
+    // handleUpdateRadiusAndCoordinates
+    //------------------------------------
+    // Updates the circle drawn on the Google map
+    // when either radius, latitude or longitude
+    // have changed, and queries the database
+    //------------------------------------
     const handleUpdateRadiusAndCoordinates = () => {
       updateCircle();
-
       triggerLoadRecords();
-      console.log(records.value);
     };
 
-    //------------------------------------
-    // OnMounted
-    //------------------------------------
+    //******************************************
+    // OnMounted: loads fields and records after
+    // the component is mounted
+    //******************************************
     onMounted(() => {
       loadFields();
       triggerLoadRecords();
@@ -177,8 +203,10 @@ export default defineComponent({
     <div>
       <Title text="Mapa" />
 
+      <!-- Filters -->
       <Filters @callback="(values) => reloadRecords(values)" />
 
+      <!-- Radius, latitud and longitude -->
       <div class="p-4 flex gap-8 justify-center">
         <div class="flex gap-2 items-center">
           <div>Radio</div>

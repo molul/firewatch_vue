@@ -21,7 +21,6 @@ export default {
             }
           }
         } catch (error) {
-          // console.log(JSON.stringify(this.data));
           console.log(error);
         }
       } else {

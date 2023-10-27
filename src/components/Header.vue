@@ -12,7 +12,9 @@ export default {
   >
     <div class="flex space-x-8 items-center flex-wrap">
       <img src="../assets/logo_cesefor.webp" alt="logo cesefor" class="h-10" />
-      <h1 class="text-3xl font-bold text-white">PRUEBA LUIS MORCILLO LUQUE</h1>
+      <h1 class="text-3xl font-bold text-primary">
+        PRUEBA LUIS MORCILLO LUQUE
+      </h1>
     </div>
     <NavBar />
   </div>

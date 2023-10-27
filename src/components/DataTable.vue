@@ -12,7 +12,6 @@ export default {
 </script>
 
 <template>
-  <!-- {{ console.log(fields) }} -->
   <div v-if="fields.length > 0" class="">
     <table class="table-auto">
       <thead class="border-b border-zinc-700">
