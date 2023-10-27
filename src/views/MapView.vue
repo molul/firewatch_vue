@@ -3,11 +3,10 @@
 import { defineComponent, ref, onMounted } from "vue";
 import DataTable from "../components/DataTable.vue";
 import NavigationButtons from "../components/NavigationButtons.vue";
-import { getFields, getRecords } from "../composables/fetchData";
+import { useFields, getRecords } from "../composables/fetchData";
 import Title from "../components/Title.vue";
 import Filters from "../components/Filters.vue";
 import { GoogleMap, Marker, CustomMarker, Circle } from "vue3-google-map";
-import NavBar from "../components/NavBar.vue";
 
 export default defineComponent({
   name: "HomeView",
@@ -20,7 +19,6 @@ export default defineComponent({
     Marker,
     Circle,
     CustomMarker,
-    NavBar,
   },
   setup() {
     //------------------------------------
@@ -34,8 +32,9 @@ export default defineComponent({
     const nivel = ref("");
     const causa = ref("");
     const viewMode = ref("map");
+    const fires = ref(null);
 
-    const { fields, fieldsError, loadFields } = getFields();
+    const { fields, fieldsError, loadFields } = useFields();
     const { records, totalCount, numPages, recordsError, loadRecords } =
       getRecords();
 
@@ -82,11 +81,6 @@ export default defineComponent({
       // console.log("qweqweqwe");
     };
 
-    onMounted(() => {
-      loadFields();
-      triggerLoadRecords();
-    });
-
     //------------------------------------
     // Google Maps variables
     //------------------------------------
@@ -131,6 +125,17 @@ export default defineComponent({
       viewMode.value = mode;
     };
 
+    //------------------------------------
+    // OnMounted
+    //------------------------------------
+    onMounted(() => {
+      loadFields();
+      triggerLoadRecords();
+      console.log(records.value);
+      // fires.value = getFires(records);
+      // console.log(fires);
+    });
+
     return {
       fields,
       fieldsError,
@@ -161,6 +166,7 @@ export default defineComponent({
       center,
       viewMode,
       switchMode,
+      fires,
     };
   },
 });
@@ -189,11 +195,8 @@ export default defineComponent({
       </div>
     </div>
 
-    <!-- View mode -->
-    <NavBar @callback="(mode) => switchMode(mode)" :current="viewMode" />
-
     <!-- Map -->
-    <div v-show="viewMode === 'map'">
+    <div>
       <Title text="Mapa" />
       <div class="p-4 flex gap-8 justify-center">
         <div class="flex gap-2 items-center">
@@ -256,19 +259,6 @@ export default defineComponent({
           </div>
         </CustomMarker>
       </GoogleMap>
-    </div>
-
-    <!-- Table -->
-    <div class="">
-      <Title text="Datos de incendios" />
-      <div class="" v-if="fields && records">
-        <div class="overflow-scroll">
-          <!-- <div v-for="(field, index) in fields" :key="index">
-            {{ field }}
-          </div> -->
-          <DataTable :fields="fields" :records="records" />
-        </div>
-      </div>
     </div>
   </div>
 </template>

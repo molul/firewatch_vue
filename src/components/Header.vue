@@ -16,5 +16,6 @@ export default {
         PRUEBA LUIS MORCILLO LUQUE
       </h1>
     </div>
+    <NavBar />
   </div>
 </template>

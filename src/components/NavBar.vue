@@ -1,17 +1,10 @@
 <script lang="ts">
 export default {
-  name: "NavBar",
-  props: {
-    current: String,
-  },
+  name: "ModeSwitch",
   setup() {
-    // const navigationItems = [
-    //   { label: "Incendios", link: "/" },
-    //   { label: "Mapa", link: "/mapa" },
-    // ];
     const navigationItems = [
-      { label: "Tabla", value: "table" },
-      { label: "Mapa", value: "map" },
+      { label: "Tabla", link: "/" },
+      { label: "Mapa", link: "mapa" },
     ];
 
     return { navigationItems };
@@ -24,7 +17,7 @@ export default {
     <div class="flex justify-center my-8">
       <div class="flex bg-primary rounded-md p-2 space-x-1">
         <div
-          class="text-white bg-white bg-opacity-0 hover:bg-opacity-20 transition duration-200 overflow-hidden"
+          class="hover:bg-opacity-20 transition duration-200 overflow-hidden"
           v-for="(item, index) in navigationItems"
           :key="index"
           :class="{
@@ -32,16 +25,13 @@ export default {
             'rounded-r': index === navigationItems.length - 1,
           }"
         >
-          <button
-            class="bg-white block font-bold uppercase font-condensed px-4 py-2"
-            :class="{
-              'bg-opacity-0': item.value != current,
-              'bg-opacity-30 text-zinc-800': item.value === current,
-            }"
-            @click="$emit('callback', item.value)"
+          <router-link
+            active-class="bg-opacity-30"
+            class="bg-white text-zinc-600 bg-opacity-0 block font-bold uppercase font-condensed px-4 py-2"
+            :to="item.link"
           >
             {{ item.label }}
-          </button>
+          </router-link>
         </div>
       </div>
     </div>

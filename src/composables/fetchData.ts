@@ -3,7 +3,7 @@ import { ref } from "vue";
 const apiURL =
   "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/incendios-forestales";
 
-export const getFields = () => {
+export const useFields = () => {
   const fields = ref(null);
   const fieldsError = ref(null);
 
@@ -33,14 +33,19 @@ export const getRecords = () => {
   const totalCount = ref(0);
   const numPages = ref(0);
 
-  const loadRecords = async (filters: {
-    page: number;
-    limit: number;
-    provincia: string;
-    situacion: string;
-    nivel: string;
-    causa: string;
-  }) => {
+  const loadRecords = async (
+    filters: {
+      page: number;
+      limit: number;
+      provincia: string;
+      situacion: string;
+      nivel: string;
+      causa: string;
+    },
+    radius?: number,
+    lat?: number,
+    lon?: number
+  ) => {
     // console.log("causa: " + filters.causa);
     // console.log(page);
     try {
@@ -84,4 +89,36 @@ export const getRecords = () => {
   };
 
   return { records, totalCount, numPages, recordsError, loadRecords };
+};
+
+export const getFires = (radius: number, lat: number, lon: number) => {
+  let firesList = null;
+  // console.log(records);
+  const distance = calculateDistance(40.7128, -74.006, 34.0522, -118.2437);
+  console.log("La distancia es " + distance + " km");
+
+  return firesList;
+};
+
+export const calculateDistance = (
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number
+) => {
+  const earthRadius = 6371;
+  const dLat = (lat2 - lat1) * (Math.PI / 180);
+  const dLon = (lon2 - lon1) * (Math.PI / 180);
+
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * (Math.PI / 180)) *
+      Math.cos(lat2 * (Math.PI / 180)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const distance = earthRadius * c;
+
+  return distance;
 };
