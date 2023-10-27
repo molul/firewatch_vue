@@ -70,7 +70,13 @@ export const getRecords = () => {
       if (filters.radius) {
         console.log("qwe");
         query +=
-          "&where=distance%28posicion%2C%20geom%27POINT%28-6%2040%29%27%2C%20100km%29";
+          "&where=distance%28posicion%2C%20geom%27POINT%28" +
+          filters.lon +
+          "%20" +
+          filters.lat +
+          "%29%27%2C%20" +
+          filters.radius +
+          "km%29";
       }
       //
 

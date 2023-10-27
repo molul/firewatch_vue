@@ -118,6 +118,10 @@ export default defineComponent({
         fillOpacity: 0.35,
       };
     };
+    const handleUpdateRadius = () => {
+      updateCircle();
+      triggerLoadRecords();
+    };
 
     //------------------------------------
     // OnMounted
@@ -152,6 +156,7 @@ export default defineComponent({
       radiusKm,
       googleMapsKey,
       updateCircle,
+      handleUpdateRadius,
       latitud,
       longitud,
       center,
@@ -194,7 +199,7 @@ export default defineComponent({
               type="text"
               ref="myInput"
               v-model="radiusKm"
-              @input="updateCircle"
+              @input="handleUpdateRadius"
             />
           </div>
         </div>
