@@ -10,6 +10,7 @@ export default defineComponent({
       required: true,
     },
     label: String,
+    id: String,
   },
 
   setup() {
@@ -23,6 +24,7 @@ export default defineComponent({
 
 <template>
   <select
+    :id="id"
     v-model="selected"
     @change="$emit('hasChanged', selected)"
     class="p-2 rounded border border-zinc-400"

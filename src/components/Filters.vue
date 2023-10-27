@@ -1,10 +1,12 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
-import Dropdown from "../components/Dropdown.vue";
+import Dropdown from "./Dropdown.vue";
 import { provinces } from "../data/provinces";
 import { situations } from "../data/situations";
 import { levels } from "../data/levels";
 import { causes } from "../data/causes";
+// import TestDropDowns from "./TestDropdowns.vue";
+// import Parent from "./Parent.vue";
 
 interface Option {
   value: string;
@@ -15,7 +17,7 @@ export default defineComponent({
   name: "Filters",
   components: { Dropdown },
   setup() {
-    const selectedProvince = ref("");
+    const selectedProvince = ref("BURGOS");
     const selectedCurrentSituation = ref("");
     const selectedLevel = ref("");
     const selectedCause = ref("");
@@ -25,6 +27,15 @@ export default defineComponent({
     const filters = ref<Option[]>([]);
     const filterPreffix = "cfp_"; // that's "cesefor filter preset" ;)
     const selectedFilter = ref("");
+
+    const updateCause = (value: string) => {
+      selectedCause.value = value;
+    };
+
+    const changeProvince = () => {
+      selectedProvince.value = "BURGOS";
+      console.log("qweqwe");
+    };
 
     const guardarFiltro = () => {
       if (nombreFiltro.value === "") {
@@ -71,11 +82,19 @@ export default defineComponent({
         label: key,
         value: value,
       }));
-      console.log(filters.value);
+      // console.log(filters.value);
     };
 
     const loadFilter = (data: string) => {
-      console.log(data);
+      const options = JSON.parse(data);
+      console.log(options);
+      selectedProvince.value = options.provincia;
+      selectedCurrentSituation.value = options.situacion;
+      selectedLevel.value = options.nivel;
+      selectedCause.value = options.causa;
+      console.log("OPTIONS PROV: " + options.provincia);
+      console.log("OPTIONS CAUSA: " + options.causa);
+      console.log("SELECTPROV: " + selectedProvince.value);
     };
 
     onMounted(() => {
@@ -97,6 +116,8 @@ export default defineComponent({
       selectedFilter,
       filters,
       loadFilter,
+      updateCause,
+      changeProvince,
     };
   },
 });
@@ -112,11 +133,13 @@ export default defineComponent({
         <div>Filtros:</div>
         <!-- <span> Provincia: {{ selected }}</span> -->
         <Dropdown
-          :selected="{ selectedProvince }"
+          id="selectProvincia"
+          :select="{ selectedProvince }"
           :data="provinces"
           label="Provincia"
           @hasChanged="
             (value) => {
+              console.log('qweqweqwe');
               selectedProvince = value;
               $emit('callback', { field: 'provincia', value: value });
             }
@@ -124,7 +147,8 @@ export default defineComponent({
         />
 
         <Dropdown
-          :selected="{ selectedCurrentSituation }"
+          id="selectSituation"
+          :select="{ selectedCurrentSituation }"
           :data="situations"
           label="Situación"
           @hasChanged="
@@ -136,7 +160,8 @@ export default defineComponent({
         />
 
         <Dropdown
-          :selected="{ selectedLevel }"
+          id="selectNivel"
+          :select="{ selectedLevel }"
           :data="levels"
           label="Nivel máximo"
           @hasChanged="
@@ -151,12 +176,14 @@ export default defineComponent({
         />
 
         <Dropdown
-          :selected="{ selectedCause }"
+          id="selectCausa"
+          :selectedValue="selectedCause"
           :data="causes"
           label="Causa probable"
           @hasChanged="
             (value) => {
-              selectedCause = value;
+              updateCause(value);
+              // selectedCause = value;
               $emit('callback', {
                 field: 'causa_probable',
                 value: value,
@@ -194,21 +221,26 @@ export default defineComponent({
         </div>
       </div>
       <!-- Load filter -->
-      <div class="flex justify-center items-center gap-2">
+      <!-- <div class="flex justify-center items-center gap-2">
         <Dropdown
-          :selected="{ selectedFilter }"
+          :select="{ selectedFilter }"
           :data="filters"
-          label="Cargar filtro"
+          label="Cargar
+        filtro"
           @hasChanged="
             (value) => {
+              // console.log('qweqweqwe2');
               selectedFilter = value;
+
               loadFilter(value);
             }
           "
         />
-
-        <!-- <p>Selected Value: {{ selectedFilter }}</p> -->
-      </div>
+      </div> -->
+      <!-- <Parent /> -->
+      <!-- <p>Selected Value: {{ selectedFilter }}</p> -->
+      <!-- <TestDropDowns /> -->
+      <!-- <button @click="changeProvince">CLICK</button> -->
     </div>
   </div>
 </template>

@@ -18,6 +18,7 @@ export const getFields = () => {
       const dataset = await data.json();
       fields.value = dataset.fields;
     } catch (err) {
+      console.log(err);
       // fields2Error.value = err.message;
       console.log(fieldsError.value);
     }
@@ -76,6 +77,7 @@ export const getRecords = () => {
       numPages.value = Math.ceil(totalCount.value / filters.limit);
       // console.log(records.value);
     } catch (err) {
+      console.log(err);
       // error.value = err;
       // console.log(recordsError.value);
     }

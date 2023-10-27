@@ -7,6 +7,7 @@ import { getFields, getRecords } from "../composables/fetchData";
 import Title from "../components/Title.vue";
 import Filters from "../components/Filters.vue";
 import { GoogleMap, Marker, CustomMarker, Circle } from "vue3-google-map";
+import NavBar from "../components/NavBar.vue";
 
 export default defineComponent({
   name: "HomeView",
@@ -19,6 +20,7 @@ export default defineComponent({
     Marker,
     Circle,
     CustomMarker,
+    NavBar,
   },
   setup() {
     //------------------------------------
@@ -31,6 +33,7 @@ export default defineComponent({
     const situacion = ref("");
     const nivel = ref("");
     const causa = ref("");
+    const viewMode = ref("map");
 
     const { fields, fieldsError, loadFields } = getFields();
     const { records, totalCount, numPages, recordsError, loadRecords } =
@@ -120,6 +123,14 @@ export default defineComponent({
       };
     };
 
+    //------------------------------------
+    // Other methods
+    //------------------------------------
+    const switchMode = (mode: string) => {
+      console.log(mode);
+      viewMode.value = mode;
+    };
+
     return {
       fields,
       fieldsError,
@@ -148,14 +159,41 @@ export default defineComponent({
       latitud,
       longitud,
       center,
+      viewMode,
+      switchMode,
     };
   },
 });
 </script>
 
 <template>
-  <div class="space-y-20">
+  <div class="space-y-4 px-4">
+    <!-- Filters -->
     <div>
+      <Filters @callback="(values) => reloadRecords(values)" />
+    </div>
+
+    <!-- Info and navigation -->
+    <div class="text-center w-full" v-if="records != null">
+      <div class="flex flex-col items-center justify-between flex-wrap">
+        <div>
+          {{ 1 + limit * (page - 1) }} Página {{ page }} de {{ numPages }} -
+          Total registros:
+          {{ totalCount }}
+        </div>
+
+        <NavigationButtons
+          @decrease-page="(n) => decreasePage(n)"
+          @increase-page="(n) => increasePage(n)"
+        />
+      </div>
+    </div>
+
+    <!-- View mode -->
+    <NavBar @callback="(mode) => switchMode(mode)" :current="viewMode" />
+
+    <!-- Map -->
+    <div v-show="viewMode === 'map'">
       <Title text="Mapa" />
       <div class="p-4 flex gap-8 justify-center">
         <div class="flex gap-2 items-center">
@@ -220,26 +258,10 @@ export default defineComponent({
       </GoogleMap>
     </div>
 
+    <!-- Table -->
     <div class="">
       <Title text="Datos de incendios" />
-      <div class="mt-10 p-4" v-if="fields && records">
-        <div>
-          <Filters @callback="(values) => reloadRecords(values)" />
-        </div>
-        <div class="text-center w-full" v-if="records != null">
-          <div class="flex items-center justify-between flex-wrap">
-            <div>
-              Página {{ page }} de {{ numPages }} - Total registros:
-              {{ totalCount }}
-            </div>
-
-            <NavigationButtons
-              @decrease-page="(n) => decreasePage(n)"
-              @increase-page="(n) => increasePage(n)"
-            />
-          </div>
-        </div>
-
+      <div class="" v-if="fields && records">
         <div class="overflow-scroll">
           <!-- <div v-for="(field, index) in fields" :key="index">
             {{ field }}
