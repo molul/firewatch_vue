@@ -31,8 +31,6 @@ export default defineComponent({
     const situacion = ref("");
     const nivel = ref("");
     const causa = ref("");
-    const viewMode = ref("map");
-    const fires = ref(null);
 
     const { fields, fieldsError, loadFields } = useFields();
     const { records, totalCount, numPages, recordsError, loadRecords } =
@@ -82,50 +80,6 @@ export default defineComponent({
     };
 
     //------------------------------------
-    // Google Maps variables
-    //------------------------------------
-    const markers = ref(null);
-
-    const radiusKm = ref(10);
-    const latitud = ref(41.4);
-    const longitud = ref(-4.25);
-    const center = ref({ lat: latitud.value, lng: longitud.value });
-    const googleMapsKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-
-    const circle = ref({
-      center: center.value,
-      radius: radiusKm.value * 1000,
-      strokeColor: "#FF0000",
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: "#FF0000",
-      fillOpacity: 0.35,
-    });
-
-    //------------------------------------
-    // Records methods
-    //------------------------------------
-    const updateCircle = () => {
-      circle.value = {
-        center: { lat: +latitud.value, lng: +longitud.value },
-        radius: radiusKm.value * 1000,
-        strokeColor: "#FF0000",
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: "#FF0000",
-        fillOpacity: 0.35,
-      };
-    };
-
-    //------------------------------------
-    // Other methods
-    //------------------------------------
-    const switchMode = (mode: string) => {
-      console.log(mode);
-      viewMode.value = mode;
-    };
-
-    //------------------------------------
     // OnMounted
     //------------------------------------
     onMounted(() => {
@@ -156,17 +110,6 @@ export default defineComponent({
       triggerLoadRecords,
       nivel,
       causa,
-      markers,
-      circle,
-      radiusKm,
-      googleMapsKey,
-      updateCircle,
-      latitud,
-      longitud,
-      center,
-      viewMode,
-      switchMode,
-      fires,
     };
   },
 });
@@ -183,8 +126,7 @@ export default defineComponent({
     <div class="text-center w-full" v-if="records != null">
       <div class="flex flex-col items-center justify-between flex-wrap">
         <div>
-          {{ 1 + limit * (page - 1) }} Página {{ page }} de {{ numPages }} -
-          Total registros:
+          Página {{ page }} de {{ numPages }} - Total registros:
           {{ totalCount }}
         </div>
 

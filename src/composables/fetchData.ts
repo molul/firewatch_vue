@@ -33,19 +33,17 @@ export const getRecords = () => {
   const totalCount = ref(0);
   const numPages = ref(0);
 
-  const loadRecords = async (
-    filters: {
-      page: number;
-      limit: number;
-      provincia: string;
-      situacion: string;
-      nivel: string;
-      causa: string;
-    },
-    radius?: number,
-    lat?: number,
-    lon?: number
-  ) => {
+  const loadRecords = async (filters: {
+    page: number;
+    limit: number;
+    provincia: string;
+    situacion: string;
+    nivel: string;
+    causa: string;
+    radius?: number;
+    lat?: number;
+    lon?: number;
+  }) => {
     // console.log("causa: " + filters.causa);
     // console.log(page);
     try {
@@ -69,6 +67,14 @@ export const getRecords = () => {
       if (filters.causa !== "") {
         query += "&where=causa_probable%20LIKE%20%27" + filters.causa + "%27";
       }
+      if (filters.radius) {
+        console.log("qwe");
+        query +=
+          "&where=distance%28posicion%2C%20geom%27POINT%28-6%2040%29%27%2C%20100km%29";
+      }
+      //
+
+      // distance(posicion, geom'POINT(-6 40)', 100km)
       // "&where=causa_probable%20LIKE%20%27NEGLIGENCIAS%27"
 
       // console.log(query);

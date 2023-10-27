@@ -31,7 +31,6 @@ export default defineComponent({
     const situacion = ref("");
     const nivel = ref("");
     const causa = ref("");
-    const viewMode = ref("map");
     const fires = ref(null);
 
     const { fields, fieldsError, loadFields } = useFields();
@@ -60,6 +59,9 @@ export default defineComponent({
         situacion: situacion.value,
         nivel: nivel.value,
         causa: causa.value,
+        radius: radiusKm.value,
+        lat: latitud.value,
+        lon: longitud.value,
       });
     };
 
@@ -103,7 +105,7 @@ export default defineComponent({
     });
 
     //------------------------------------
-    // Records methods
+    // Google Maps methods
     //------------------------------------
     const updateCircle = () => {
       circle.value = {
@@ -118,22 +120,11 @@ export default defineComponent({
     };
 
     //------------------------------------
-    // Other methods
-    //------------------------------------
-    const switchMode = (mode: string) => {
-      console.log(mode);
-      viewMode.value = mode;
-    };
-
-    //------------------------------------
     // OnMounted
     //------------------------------------
     onMounted(() => {
       loadFields();
       triggerLoadRecords();
-      console.log(records.value);
-      // fires.value = getFires(records);
-      // console.log(fires);
     });
 
     return {
@@ -164,8 +155,6 @@ export default defineComponent({
       latitud,
       longitud,
       center,
-      viewMode,
-      switchMode,
       fires,
     };
   },
@@ -174,17 +163,11 @@ export default defineComponent({
 
 <template>
   <div class="space-y-4 px-4">
-    <!-- Filters -->
-    <div>
-      <Filters @callback="(values) => reloadRecords(values)" />
-    </div>
-
     <!-- Info and navigation -->
     <div class="text-center w-full" v-if="records != null">
       <div class="flex flex-col items-center justify-between flex-wrap">
         <div>
-          {{ 1 + limit * (page - 1) }} Página {{ page }} de {{ numPages }} -
-          Total registros:
+          Página {{ page }} de {{ numPages }} - Total registros:
           {{ totalCount }}
         </div>
 
@@ -198,6 +181,10 @@ export default defineComponent({
     <!-- Map -->
     <div>
       <Title text="Mapa" />
+      <div class="text-center">
+        Mostrar los incendios de la página actual en el radio en torno a las
+        coordenadas introducidas
+      </div>
       <div class="p-4 flex gap-8 justify-center">
         <div class="flex gap-2 items-center">
           <div>Radio</div>
