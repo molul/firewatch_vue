@@ -1,28 +1,12 @@
 NEXT:
-	BUGS:
+	Componentizar bien todo
 
-	------------------------------
+	DOCUMENTACIÓN
 
-	LocalStorage
+	TESTS UNITARIOS: nope
 
-	Mostrar incendios en X km a la redonda
-		
+	Intentar cargar preset
 
-	DOCUMENTACIÓN:
-		Al lanzar la aplicación, te pedirá permiso para ubicarte. Acepta.
-		En MacOS tendrás que hacerlo en preferencias del sistema
-
-	TESTS UNITARIOS
-
-	---------------------------------
-
-	EXTRAS CUANDO TENGA TODO
-		Intentar cargar preset
-		Componentizar bien todo
-		Iconos para botones
-		ScrollToTop
-		Fuente chula
-		Info y Navigation buttons a componente aislado, arriba y abajo, col y col-reverse
 
 ----------------------------------------------------
 

@@ -98,7 +98,6 @@ export const getRecords = () => {
         let auxMarkers: Position[] = [];
         for (let i = 0; i < recordsData.results.length; i++) {
           const record = recordsData.results[i];
-          console.log(record.posicion.lat);
           const auxMarker = {
             lat: record.posicion.lat,
             lng: record.posicion.lon,

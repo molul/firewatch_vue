@@ -198,16 +198,16 @@ export default defineComponent({
           <div>Guardar filtro</div>
           <div class="">
             <input
-              class="p-2 rounded border border-zinc-400 w-96"
+              class="p-2 rounded border border-zinc-400 w-full"
               type="text"
               ref="myInput"
               v-model="nombreFiltro"
             />
           </div>
-          <div class="bg-primary p-2 rounded">
+          <div class="">
             <button
               @click="guardarFiltro"
-              class="bg-black bg-opacity-20 px-2 py-1 rounded text-white"
+              class="bg-primary hover:bg-primary-light text-zinc-700 uppercase font-bold px-2 py-2 rounded transition-colors"
             >
               Guardar
             </button>

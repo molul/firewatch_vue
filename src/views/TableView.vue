@@ -117,6 +117,7 @@ export default defineComponent({
 
 <template>
   <div class="space-y-4 px-4">
+    <Title text="Datos de incendios" />
     <!-- Filters -->
     <div>
       <Filters @callback="(values) => reloadRecords(values)" />
@@ -139,7 +140,6 @@ export default defineComponent({
 
     <!-- Table -->
     <div>
-      <Title text="Datos de incendios" />
       <div class="" v-if="fields && records">
         <div class="overflow-scroll">
           <!-- <div v-for="(field, index) in fields" :key="index">

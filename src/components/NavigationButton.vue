@@ -10,11 +10,11 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="p-2 bg-primary rounded">
+  <div class="">
     <button
       type="button"
       @click="$emit('callback')"
-      class="bg-black bg-opacity-20 hover:bg-opacity-40 transition-colors text-white font-bold px-2 py-2 rounded"
+      class="bg-primary hover:bg-primary-light text-zinc-700 uppercase font-bold p-4 rounded transition-colors"
     >
       {{ label }}
     </button>

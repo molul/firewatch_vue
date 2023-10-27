@@ -176,10 +176,9 @@ export default defineComponent({
   <div class="space-y-4 px-4">
     <div>
       <Title text="Mapa" />
-      <div class="text-center">
-        Mostrar los incendios de la página actual en el radio en torno a las
-        coordenadas introducidas
-      </div>
+
+      <Filters @callback="(values) => reloadRecords(values)" />
+
       <div class="p-4 flex gap-8 justify-center">
         <div class="flex gap-2 items-center">
           <div>Radio</div>
@@ -189,7 +188,7 @@ export default defineComponent({
               type="text"
               ref="myInput"
               v-model="radiusKm"
-              @input="handleUpdateRadiusAndCoordinates"
+              @input="() => handleUpdateRadiusAndCoordinates()"
             />
           </div>
         </div>
@@ -201,7 +200,7 @@ export default defineComponent({
               type="text"
               ref="myInput"
               v-model="longitud"
-              @input="handleUpdateRadiusAndCoordinates"
+              @input="() => handleUpdateRadiusAndCoordinates()"
             />
           </div>
         </div>
@@ -213,7 +212,7 @@ export default defineComponent({
               type="text"
               ref="myInput"
               v-model="latitud"
-              @input="handleUpdateRadiusAndCoordinates"
+              @input="() => handleUpdateRadiusAndCoordinates()"
             />
           </div>
         </div>
