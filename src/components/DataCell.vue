@@ -13,9 +13,7 @@ export default {
             return this.data;
           } else if (this.data != null && typeof this.data === "object") {
             if (this.data.lon) {
-              const lon = Math.round(this.data.lon * 100) / 100;
-              const lat = Math.round(this.data.lat * 100) / 100;
-              return "[" + lon + ", " + lat + "]";
+              return "[" + this.data.lon + ", " + this.data.lat + "]";
             } else {
               return this.data.join();
             }

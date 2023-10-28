@@ -19,7 +19,7 @@ export default {
           <th
             v-for="(field, index) in fields"
             :key="index"
-            class="bg-white whitespace-nowrap text-zinc-700 px-4 py-3 text-sm align-top"
+            class="bg-white whitespace-nowrap text-zinc-700 px-4 py-3 text-sm align-top uppercase"
           >
             {{ field.label }}
           </th>
