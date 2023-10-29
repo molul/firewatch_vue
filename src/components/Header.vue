@@ -8,7 +8,7 @@ export default {
 
 <template>
   <div
-    class="flex flex-col md:flex-row bg-secondary items-center md:items-center shadow-xl p-4 flex-wrap space-y-8 md:space-y-0 md:space-x-4 md:justify-between"
+    class="flex flex-col md:flex-row bg-secondary items-center md:items-center shadow-xl p-6 flex-wrap space-y-6 md:space-y-0 md:space-x-4 md:justify-between"
   >
     <div
       class="flex md:flex-row flex-col justify-start items-center md:items-center space-y-4 md:space-y-0 md:space-x-4"

@@ -98,6 +98,7 @@ export const useRecords = () => {
     }
     if (filters.radius) {
       query +=
+        "&where=posicion%20IS%20NOT%20NULL" +
         "&select=posicion&where=distance%28posicion%2C%20geom%27POINT%28" +
         filters.lon +
         "%20" +
@@ -140,11 +141,13 @@ export const useRecords = () => {
         // while our database returns {lat, lon}, so we create a new
         // array before assigning it to markers
         for (let i = 0; i < recordsData.results.length; i++) {
+          // console.log(i);
           const record = recordsData.results[i];
           const auxMarker = {
             lat: record.posicion.lat,
             lng: record.posicion.lon,
           };
+          // console.log(auxMarker);
           auxMarkers.push(auxMarker);
         }
         markers.value = auxMarkers;
