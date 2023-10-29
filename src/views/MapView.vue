@@ -207,12 +207,12 @@ export default defineComponent({
       <Filters @callback="(values) => reloadRecords(values)" />
 
       <!-- Radius, latitud and longitude -->
-      <div class="p-4 flex gap-8 justify-center">
+      <div class="p-4 flex flex-col md:flex-row gap-4 justify-center">
         <div class="flex gap-2 items-center">
-          <div>Radio</div>
-          <div>
+          <div class="w-20 md:w-auto">Radio</div>
+          <div class="w-full md:w-auto">
             <input
-              class="p-2 rounded border border-zinc-400 w-20"
+              class="p-2 rounded border border-zinc-400 w-full md:w-20"
               type="text"
               ref="myInput"
               v-model="radiusKm"
@@ -221,10 +221,10 @@ export default defineComponent({
           </div>
         </div>
         <div class="flex gap-2 items-center">
-          <div>Longitud</div>
-          <div>
+          <div class="w-20 md:w-auto">Longitud</div>
+          <div class="w-full md:w-auto">
             <input
-              class="p-2 rounded border border-zinc-400 w-20"
+              class="p-2 rounded border border-zinc-400 w-full md:w-20"
               type="text"
               ref="myInput"
               v-model="longitud"
@@ -233,10 +233,10 @@ export default defineComponent({
           </div>
         </div>
         <div class="flex gap-2 items-center">
-          <div>Latitud</div>
-          <div>
+          <div class="w-20 md:w-auto">Latitud</div>
+          <div class="w-full md:w-auto">
             <input
-              class="p-2 rounded border border-zinc-400 w-20"
+              class="p-2 rounded border border-zinc-400 w-full md:w-20"
               type="text"
               ref="myInput"
               v-model="latitud"

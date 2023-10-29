@@ -8,13 +8,21 @@ export default {
 
 <template>
   <div
-    class="flex justify-between bg-secondary items-center shadow-xl px-4 py-4 flex-wrap"
+    class="flex flex-col bg-secondary items-start shadow-xl px-4 py-4 flex-wrap"
   >
-    <div class="flex space-x-8 items-center flex-wrap">
-      <img src="../assets/logo_cesefor.webp" alt="logo cesefor" class="h-10" />
-      <h1 class="text-3xl font-bold text-primary">
-        PRUEBA LUIS MORCILLO LUQUE
-      </h1>
+    <div class="flex flex-col justify-start items-start">
+      <div>
+        <img
+          src="../assets/logo_cesefor.webp"
+          alt="logo cesefor"
+          class="h-10"
+        />
+      </div>
+      <div class="break-words">
+        <h1 class="text-xl font-bold text-primary break-words">
+          PRUEBA LUIS MORCILLO LUQUE
+        </h1>
+      </div>
     </div>
     <NavBar />
   </div>

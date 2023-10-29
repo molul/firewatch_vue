@@ -14,7 +14,7 @@ export default defineComponent({
     <button
       type="button"
       @click="$emit('callback')"
-      class="bg-primary hover:bg-primary-light hover:shadow-lg text-secondary uppercase font-extrabold p-1 rounded transition-colors w-14"
+      class="bg-primary hover:bg-primary-light hover:shadow-lg text-secondary uppercase font-extrabold p-1 rounded transition-colors w-12"
     >
       {{ label }}
     </button>

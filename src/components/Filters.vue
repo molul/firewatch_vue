@@ -115,8 +115,10 @@ export default defineComponent({
       class="flex flex-col gap-8 my-4 border border-zinc-400 p-8 rounded bg-white bg-opacity-50"
     >
       <!-- Filters -->
-      <div class="flex gap-2 items-center justify-center flex-wrap">
-        <div>Filtros:</div>
+      <div
+        class="flex flex-col md:flex-row gap-2 items-start md:items-center justify-center flex-wrap"
+      >
+        <div class="">Filtros</div>
         <Dropdown
           id="selectProvincia"
           :select="{ selectedProvince }"
@@ -177,11 +179,13 @@ export default defineComponent({
       </div>
       <!-- Save filter -->
       <div>
-        <div class="flex gap-2 items-center justify-center">
-          <div>Guardar filtro</div>
-          <div class="">
+        <div
+          class="flex flex-col md:flex-row gap-2 items-start md:items-center justify-center"
+        >
+          <div class="">Guardar filtro</div>
+          <div class="w-full md:w-auto">
             <input
-              class="p-2 rounded border border-zinc-400 w-full"
+              class="p-2 rounded border border-zinc-400 w-full md:w-auto"
               type="text"
               ref="myInput"
               v-model="nombreFiltro"
