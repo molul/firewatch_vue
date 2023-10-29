@@ -27,7 +27,7 @@ export default {
         >
           <router-link
             active-class="bg-opacity-30"
-            class="bg-white text-secondary bg-opacity-0 block font-bold uppercase font-condensed px-4 py-2"
+            class="bg-white text-secondary bg-opacity-0 block font-bold uppercase font-condensed px-4 py-2 hover:bg-opacity-20 transition-colors"
             :to="item.link"
           >
             {{ item.label }}
