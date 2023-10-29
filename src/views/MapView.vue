@@ -7,6 +7,7 @@ import Title from "../components/Title.vue";
 import Filters from "../components/Filters.vue";
 import InfoAndNavigation from "../components/InfoAndNavigation.vue";
 import GoogleMapComp from "../components/GoogleMapComp.vue";
+import MapValueInput from "../components/MapValueInput.vue";
 
 export default defineComponent({
   name: "HomeView",
@@ -17,6 +18,7 @@ export default defineComponent({
     Filters,
     InfoAndNavigation,
     GoogleMapComp,
+    MapValueInput,
   },
   setup() {
     //******************************************
@@ -130,8 +132,16 @@ export default defineComponent({
     // have changed
     //------------------------------------
     const updateCircle = () => {
+      center.value = {
+        lat: +latitud.value,
+        lng: +longitud.value,
+      };
+
       circle.value = {
-        center: { lat: +latitud.value, lng: +longitud.value },
+        center: {
+          lat: +latitud.value,
+          lng: +longitud.value,
+        },
         radius: radiusKm.value * 1000,
         strokeColor: "#FF0000",
         strokeOpacity: 0.8,
@@ -139,6 +149,7 @@ export default defineComponent({
         fillColor: "#FF0000",
         fillOpacity: 0.35,
       };
+      // console.log(circle.value);
     };
 
     //------------------------------------
@@ -205,42 +216,21 @@ export default defineComponent({
 
       <!-- Radius, latitud and longitude -->
       <div class="p-4 flex flex-col md:flex-row gap-4 justify-center">
-        <div class="flex gap-2 items-center">
-          <div class="w-20 md:w-auto">Radio</div>
-          <div class="w-full md:w-auto">
-            <input
-              class="p-2 rounded border border-zinc-400 w-full md:w-20"
-              type="text"
-              ref="myInput"
-              v-model="radiusKm"
-              @input="() => handleUpdateRadiusAndCoordinates()"
-            />
-          </div>
-        </div>
-        <div class="flex gap-2 items-center">
-          <div class="w-20 md:w-auto">Longitud</div>
-          <div class="w-full md:w-auto">
-            <input
-              class="p-2 rounded border border-zinc-400 w-full md:w-20"
-              type="text"
-              ref="myInput"
-              v-model="longitud"
-              @input="() => handleUpdateRadiusAndCoordinates()"
-            />
-          </div>
-        </div>
-        <div class="flex gap-2 items-center">
-          <div class="w-20 md:w-auto">Latitud</div>
-          <div class="w-full md:w-auto">
-            <input
-              class="p-2 rounded border border-zinc-400 w-full md:w-20"
-              type="text"
-              ref="myInput"
-              v-model="latitud"
-              @input="() => handleUpdateRadiusAndCoordinates()"
-            />
-          </div>
-        </div>
+        <MapValueInput
+          label="Radioo"
+          v-model="radiusKm"
+          @input="handleUpdateRadiusAndCoordinates()"
+        />
+        <MapValueInput
+          label="Longitud"
+          v-model="longitud"
+          @input="handleUpdateRadiusAndCoordinates()"
+        />
+        <MapValueInput
+          label="Latitud"
+          v-model="latitud"
+          @input="handleUpdateRadiusAndCoordinates()"
+        />
       </div>
 
       <!-- Info and navigation -->
@@ -259,7 +249,7 @@ export default defineComponent({
         :circle="circle"
         :markers="markers"
         :center="center"
-        :radiusKm="radiusKm"
+        :radiusKm="radiusKm.toString()"
       />
 
       <InfoAndNavigation
