@@ -5,7 +5,8 @@ import NavigationButtons from "../components/NavigationButtons.vue";
 import { useFields, useRecords } from "../composables/fetchData";
 import Title from "../components/Title.vue";
 import Filters from "../components/Filters.vue";
-import { GoogleMap, Marker, CustomMarker, Circle } from "vue3-google-map";
+import InfoAndNavigation from "../components/InfoAndNavigation.vue";
+import GoogleMapComp from "../components/GoogleMapComp.vue";
 
 export default defineComponent({
   name: "HomeView",
@@ -14,10 +15,8 @@ export default defineComponent({
     NavigationButtons,
     Title,
     Filters,
-    GoogleMap,
-    Marker,
-    Circle,
-    CustomMarker,
+    InfoAndNavigation,
+    GoogleMapComp,
   },
   setup() {
     //******************************************
@@ -81,11 +80,11 @@ export default defineComponent({
     };
 
     //------------------------------------
-    // reloadRecords
+    // updateFilters
     //------------------------------------
     // Updates the corresponding variable and triggers a new query
     //------------------------------------
-    const reloadRecords = (data: { field: string; value: string }) => {
+    const updateFilters = (data: { field: string; value: string }) => {
       if (data.field === "provincia") {
         provincia.value = data.value;
       }
@@ -108,7 +107,6 @@ export default defineComponent({
     const latitud = ref(41.4);
     const longitud = ref(-4.25);
     const center = ref({ lat: latitud.value, lng: longitud.value });
-    const googleMapsKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
     const circle = ref({
       center: center.value,
@@ -180,14 +178,13 @@ export default defineComponent({
       numPages,
       increasePage,
       decreasePage,
-      reloadRecords,
+      updateFilters,
       triggerLoadRecords,
       nivel,
       causa,
       markers,
       circle,
       radiusKm,
-      googleMapsKey,
       updateCircle,
       handleUpdateRadiusAndCoordinates,
       latitud,
@@ -204,7 +201,7 @@ export default defineComponent({
       <Title text="Mapa" />
 
       <!-- Filters -->
-      <Filters @callback="(values) => reloadRecords(values)" />
+      <Filters @callback="(values) => updateFilters(values)" />
 
       <!-- Radius, latitud and longitude -->
       <div class="p-4 flex flex-col md:flex-row gap-4 justify-center">
@@ -247,46 +244,33 @@ export default defineComponent({
       </div>
 
       <!-- Info and navigation -->
-      <div class="text-center w-full" v-if="records != null">
-        <div class="flex flex-col items-center justify-between flex-wrap">
-          <div>
-            Página {{ page }} de {{ numPages }} - Total registros:
-            {{ totalCount }}
-          </div>
-
-          <NavigationButtons
-            @decrease-page="(n) => decreasePage(n)"
-            @increase-page="(n) => increasePage(n)"
-          />
-        </div>
-      </div>
+      <InfoAndNavigation
+        position="top"
+        :page="page"
+        :num-pages="numPages"
+        :total-count="totalCount"
+        @increase-page="(n) => increasePage(n)"
+        @decrease-page="(n) => decreasePage(n)"
+        :visible="records != null"
+      />
 
       <!-- Map -->
-      <GoogleMap
-        :api-key="googleMapsKey"
-        style="width: 100%; height: 500px"
+      <GoogleMapComp
+        :circle="circle"
+        :markers="markers"
         :center="center"
-        :zoom="6.5"
-      >
-        <Circle :options="circle" />
-        <CustomMarker
-          v-for="(item, index) in markers"
-          :key="index"
-          :options="{
-            position: item,
-            anchorPoint: 'BOTTOM_CENTER',
-          }"
-        >
-          <div style="text-align: center" class="">
-            <img
-              src="../assets/fire.png"
-              width="25"
-              height="25"
-              style="margin-top: 0px"
-            />
-          </div>
-        </CustomMarker>
-      </GoogleMap>
+        :radiusKm="radiusKm"
+      />
+
+      <InfoAndNavigation
+        position="bottom"
+        :page="page"
+        :num-pages="numPages"
+        :total-count="totalCount"
+        @increase-page="(n) => increasePage(n)"
+        @decrease-page="(n) => decreasePage(n)"
+        :visible="records != null"
+      />
     </div>
   </div>
 </template>

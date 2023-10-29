@@ -3,7 +3,7 @@ import { ref } from "vue";
 const apiURL =
   "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/incendios-forestales";
 
-interface Position {
+export interface Position {
   lat: number;
   lng: number;
 }

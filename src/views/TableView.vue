@@ -6,6 +6,8 @@ import { useFields, useRecords } from "../composables/fetchData";
 import Title from "../components/Title.vue";
 import Filters from "../components/Filters.vue";
 import { GoogleMap, Marker, CustomMarker, Circle } from "vue3-google-map";
+import PageInfo from "../components/PageInfo.vue";
+import InfoAndNavigation from "../components/InfoAndNavigation.vue";
 
 export default defineComponent({
   name: "HomeView",
@@ -18,6 +20,8 @@ export default defineComponent({
     Marker,
     Circle,
     CustomMarker,
+    PageInfo,
+    InfoAndNavigation,
   },
   setup() {
     //******************************************
@@ -129,27 +133,36 @@ export default defineComponent({
 <template>
   <div class="space-y-4 px-4">
     <Title text="Datos de incendios" />
+
     <!-- Filters -->
     <Filters @callback="(values) => reloadRecords(values)" />
 
     <!-- Info and navigation -->
-    <div class="text-center w-full" v-if="records != null">
-      <div class="flex flex-col items-center justify-between flex-wrap">
-        <div>
-          Página {{ page }} de {{ numPages }} - Total registros:
-          {{ totalCount }}
-        </div>
-
-        <NavigationButtons
-          @decrease-page="(n) => decreasePage(n)"
-          @increase-page="(n) => increasePage(n)"
-        />
-      </div>
-    </div>
+    <InfoAndNavigation
+      :page="page"
+      :num-pages="numPages"
+      :total-count="totalCount"
+      @increase-page="(n) => increasePage(n)"
+      @decrease-page="(n) => decreasePage(n)"
+      :visible="records != null"
+      position="top"
+    />
 
     <!-- Table -->
-    <div v-if="fields && records" class="overflow-scroll">
-      <DataTable :fields="fields" :records="records" />
-    </div>
+    <DataTable
+      :visible="fields != null && records != null"
+      :fields="fields"
+      :records="records"
+    />
+
+    <InfoAndNavigation
+      :page="page"
+      :num-pages="numPages"
+      :total-count="totalCount"
+      @increase-page="(n) => increasePage(n)"
+      @decrease-page="(n) => decreasePage(n)"
+      :visible="records != null"
+      position="bottom"
+    />
   </div>
 </template>
