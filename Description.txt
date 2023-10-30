@@ -5,6 +5,8 @@ TO DO
 -Tocar filtros y latitud y tal reinicia page y Num pages
 -Meter filtros y latitud en nested controlled components
 -Cambiar mapa a uno libre
+-Slider radius
+-Slider longitude y latitud con min y máx?
 
 
 
