@@ -1,5 +1,13 @@
 Description
 -----------
+
+TO DO
+-Tocar filtros y latitud y tal reinicia page y Num pages
+-Meter filtros y latitud en nested controlled components
+-Cambiar mapa a uno libre
+
+
+
 A client requests a SPA from us to show real-time information about the forest fires detected in Castilla y León (Spain) during the last two years. To do this, we use an open data API from: https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/console
 
 Basic requirements:
