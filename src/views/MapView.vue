@@ -217,7 +217,7 @@ export default defineComponent({
       <!-- Radius, latitud and longitude -->
       <div class="p-4 flex flex-col md:flex-row gap-4 justify-center">
         <MapValueInput
-          label="Radioo"
+          label="Radio"
           v-model="radiusKm"
           @input="handleUpdateRadiusAndCoordinates()"
         />
