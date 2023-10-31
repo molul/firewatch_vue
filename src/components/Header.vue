@@ -24,7 +24,7 @@ export default {
         <h1
           class="text-2xl md:text-2xl lg:text-3xl font-bold text-primary break-words text-center md:text-left"
         >
-          PRUEBA LUIS MORCILLO LUQUE
+          FIREWATCH
         </h1>
       </div>
     </div>
