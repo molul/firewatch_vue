@@ -1,12 +1,12 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="text-center">
+  <div class="">
     <img
       src="../assets/fire.png"
-      width="25"
-      height="25"
-      style="margin-top: 0px"
+      width="30"
+      height="30"
+      class="-translate-x-[15px] -translate-y-[30px]"
     />
   </div>
 </template>

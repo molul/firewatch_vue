@@ -8,7 +8,10 @@ export default defineComponent({
   components: { FireMarker },
   props: {
     markers: Array<Position>,
-    center: Object as () => Position,
+    center: {
+      type: Object as () => Position,
+      required: true,
+    },
     radiusKm: {
       type: Number,
       required: true,
@@ -27,7 +30,25 @@ export default defineComponent({
       };
     });
 
-    return { circle };
+    const radiusDeg = computed(() => {
+      const earthRadiusInKm = 6371; // Radius of the Earth in kilometers
+      const degreesPerRadian = 180.0 / Math.PI;
+
+      // Calculate the angular distance in radians
+      const angularDistance = props.radiusKm / earthRadiusInKm;
+
+      // Convert latitude from degrees to radians
+      const latitudeInRadians = props.center.lat / degreesPerRadian;
+
+      // Calculate the corresponding change in longitude
+      const deltaLongitude = angularDistance * degreesPerRadian;
+
+      const ret = deltaLongitude / Math.cos(latitudeInRadians);
+
+      return ret;
+    });
+
+    return { circle, radiusDeg };
   },
 });
 </script>
@@ -37,13 +58,13 @@ export default defineComponent({
     <ol-map
       :loadTilesWhileAnimating="true"
       :loadTilesWhileInteracting="true"
-      style="height: 400px"
+      style="height: 600px"
     >
       <ol-view
         ref="view"
         :center="[center?.lng, center?.lat]"
         :rotation="0"
-        :zoom="5"
+        :zoom="7"
         projection="EPSG:4326"
       />
 
@@ -60,6 +81,21 @@ export default defineComponent({
           <FireMarker />
         </div>
       </ol-overlay>
+
+      <ol-vector-layer>
+        <ol-source-vector>
+          <ol-feature>
+            <ol-geom-circle
+              :center="[center?.lng, center?.lat]"
+              :radius="radiusDeg"
+            ></ol-geom-circle>
+            <ol-style>
+              <ol-style-stroke color="red" :width="3"></ol-style-stroke>
+              <ol-style-fill color="rgba(255,0,0,0.2)"></ol-style-fill>
+            </ol-style>
+          </ol-feature>
+        </ol-source-vector>
+      </ol-vector-layer>
     </ol-map>
   </div>
 </template>
