@@ -2,10 +2,11 @@
 /* eslint-disable no-undef */
 import { defineComponent } from "vue";
 import Header from "./components/Header.vue";
+import Footer from "./components/Footer.vue";
 
 export default defineComponent({
   name: "App",
-  components: { Header },
+  components: { Header, Footer },
 });
 </script>
 
@@ -14,4 +15,5 @@ export default defineComponent({
   <div class="bg-zinc-200 py-4">
     <router-view />
   </div>
+  <Footer />
 </template>

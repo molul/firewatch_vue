@@ -8,7 +8,7 @@ export default {
 </script>
 
 <template>
-  <div class="flex justify-center gap-2">
+  <div class="flex justify-center gap-2 flex-wrap">
     <NavigationButton @callback="$emit('decrease-page', 50)" label="-50" />
     <NavigationButton @callback="$emit('decrease-page', 10)" label="-10" />
     <NavigationButton @callback="$emit('decrease-page', 1)" label="<" />

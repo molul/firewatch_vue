@@ -8,6 +8,8 @@ import Filters from "../components/Filters.vue";
 import InfoAndNavigation from "../components/InfoAndNavigation.vue";
 import GoogleMapComp from "../components/GoogleMapComp.vue";
 import MapValueInput from "../components/MapValueInput.vue";
+import FireMarker from "../components/FireMarker.vue";
+import OpenLayersMapComp from "../components/OpenLayersMapComp.vue";
 
 export default defineComponent({
   name: "HomeView",
@@ -19,6 +21,8 @@ export default defineComponent({
     InfoAndNavigation,
     GoogleMapComp,
     MapValueInput,
+    FireMarker,
+    OpenLayersMapComp,
   },
   setup() {
     //******************************************
@@ -245,12 +249,47 @@ export default defineComponent({
       />
 
       <!-- Map -->
+      <OpenLayersMapComp
+        :markers="markers"
+        :center="center"
+        :radiusKm="radiusKm"
+      />
+      <!-- <div class="py-4">
+        <ol-map
+          :loadTilesWhileAnimating="true"
+          :loadTilesWhileInteracting="true"
+          style="height: 400px"
+        >
+          <ol-view
+            ref="view"
+            :center="[-4, 41]"
+            :rotation="0"
+            :zoom="5"
+            projection="EPSG:4326"
+          />
+
+          <ol-tile-layer>
+            <ol-source-osm />
+          </ol-tile-layer>
+
+          <ol-overlay
+            :position="[item.lng, item.lat]"
+            v-for="(item, index) in markers"
+            :key="index"
+          >
+            <div class="overlay-content">
+              <FireMarker />
+            </div>
+          </ol-overlay>
+        </ol-map>
+      </div> -->
+      <!-- 
       <GoogleMapComp
         :circle="circle"
         :markers="markers"
         :center="center"
         :radiusKm="radiusKm.toString()"
-      />
+      /> -->
 
       <InfoAndNavigation
         position="bottom"
