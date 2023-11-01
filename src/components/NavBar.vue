@@ -3,8 +3,8 @@ export default {
   name: "ModeSwitch",
   setup() {
     const navigationItems = [
-      { label: "Tabla", link: "/" },
-      { label: "Mapa", link: "mapa" },
+      { label: "Mapa", link: "/" },
+      { label: "Tabla", link: "tabla" },
     ];
 
     return { navigationItems };

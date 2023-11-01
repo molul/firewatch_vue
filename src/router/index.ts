@@ -6,12 +6,12 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: TableView,
+    component: MapView,
   },
   {
-    path: "/mapa",
-    name: "map",
-    component: MapView,
+    path: "/tabla",
+    name: "data",
+    component: TableView,
   },
 ];
 
