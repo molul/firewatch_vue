@@ -64,7 +64,7 @@ export default defineComponent({
         ref="view"
         :center="[center?.lng, center?.lat]"
         :rotation="0"
-        :zoom="7"
+        :zoom="6"
         projection="EPSG:4326"
       />
 
