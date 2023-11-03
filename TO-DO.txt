@@ -1,0 +1,12 @@
+NEXT:
+
+	Cuando se pone un filtro de lo que sea, page tiene que volver a 1
+
+	Poner dropdowns bonitos
+	
+
+	Componentizar bien todo
+
+	Intentar cargar preset
+
+
