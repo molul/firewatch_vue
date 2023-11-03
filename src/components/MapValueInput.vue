@@ -5,7 +5,7 @@ export default defineComponent({
   name: "MapValueInput",
 
   props: {
-    modelValue: Number,
+    value: Number,
     label: String,
   },
   setup() {},
@@ -17,14 +17,9 @@ export default defineComponent({
     <div class="w-20 md:w-auto">{{ label }}</div>
     <div class="w-full md:w-auto">
       <input
-        :value="modelValue"
+        :value="value"
         class="p-2 rounded border border-zinc-400 w-full md:w-20"
-        @input="
-          $emit(
-            'update:modelValue',
-            parseFloat(($event.target as HTMLInputElement).value)
-          )
-        "
+        @input="$emit('callback', $event)"
       />
     </div>
   </div>

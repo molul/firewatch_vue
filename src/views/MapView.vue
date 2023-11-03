@@ -7,9 +7,9 @@ import Title from "../components/Title.vue";
 import Filters from "../components/Filters.vue";
 import InfoAndNavigation from "../components/InfoAndNavigation.vue";
 import GoogleMapComp from "../components/GoogleMapComp.vue";
-import MapValueInput from "../components/MapValueInput.vue";
 import FireMarker from "../components/FireMarker.vue";
 import OpenLayersMapComp from "../components/OpenLayersMapComp.vue";
+import MapInputs from "../components/MapInputs.vue";
 
 export default defineComponent({
   name: "HomeView",
@@ -20,9 +20,9 @@ export default defineComponent({
     Filters,
     InfoAndNavigation,
     GoogleMapComp,
-    MapValueInput,
     FireMarker,
     OpenLayersMapComp,
+    MapInputs,
   },
   setup() {
     //******************************************
@@ -168,6 +168,31 @@ export default defineComponent({
       triggerLoadRecords();
     };
 
+    //------------------------------------
+    // handleUpdateRadiusAndCoordinates
+    //------------------------------------
+    // Updates the circle drawn on the Google map
+    // when either radius, latitude or longitude
+    // have changed, and queries the database
+    //------------------------------------
+    const handleUpdateRadiusAndCoordinates2 = (
+      field: string,
+      value: number
+    ) => {
+      if (field === "radiusKm") {
+        radiusKm.value = value;
+      }
+      if (field === "longitud") {
+        longitud.value = value;
+      }
+      if (field === "latitud") {
+        latitud.value = value;
+      }
+
+      updateCircle();
+      triggerLoadRecords();
+    };
+
     //******************************************
     // OnMounted: loads fields and records after
     // the component is mounted
@@ -202,6 +227,7 @@ export default defineComponent({
       radiusKm,
       updateCircle,
       handleUpdateRadiusAndCoordinates,
+      handleUpdateRadiusAndCoordinates2,
       latitud,
       longitud,
       center,
@@ -219,23 +245,16 @@ export default defineComponent({
       <Filters @callback="(values) => updateFilters(values)" />
 
       <!-- Radius, latitud and longitude -->
-      <div class="p-4 flex flex-col md:flex-row gap-4 justify-center">
-        <MapValueInput
-          label="Radio"
-          v-model="radiusKm"
-          @input="handleUpdateRadiusAndCoordinates()"
-        />
-        <MapValueInput
-          label="Longitud"
-          v-model="longitud"
-          @input="handleUpdateRadiusAndCoordinates()"
-        />
-        <MapValueInput
-          label="Latitud"
-          v-model="latitud"
-          @input="handleUpdateRadiusAndCoordinates()"
-        />
-      </div>
+      <MapInputs
+        :radius-km="radiusKm"
+        :longitud="longitud"
+        :latitud="latitud"
+        @callback="
+          ({ name, value }) => {
+            handleUpdateRadiusAndCoordinates2(name, value);
+          }
+        "
+      />
 
       <!-- Info and navigation -->
       <InfoAndNavigation

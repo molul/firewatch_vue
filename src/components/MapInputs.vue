@@ -9,14 +9,10 @@ export default defineComponent({
   props: {
     radiusKm: Number,
     longitud: Number,
+    latitud: Number,
   },
 
-  setup(props) {
-    const localRadius = props.radiusKm;
-    console.log(localRadius);
-    const localLong = props.longitud;
-    return { localRadius, localLong };
-  },
+  setup() {},
 });
 </script>
 
@@ -24,19 +20,36 @@ export default defineComponent({
   <div class="p-4 flex flex-col md:flex-row gap-4 justify-center">
     <MapValueInput
       label="Radio"
-      :value="localRadius"
-      @input="$emit('callback', $event)"
+      :value="radiusKm"
+      @callback="
+        (event) =>
+          $emit('callback', {
+            name: 'radiusKm',
+            value: parseFloat(event.target.value),
+          })
+      "
     />
-    <!-- <MapValueInput label="Long" v-model="localLong" /> -->
-    <!-- <MapValueInput
+    <MapValueInput
       label="Longitud"
-      v-model="longitud"
-      @input="(value) => $emit('update:longitud', value)"
+      :value="longitud"
+      @callback="
+        (event) =>
+          $emit('callback', {
+            name: 'longitud',
+            value: parseFloat(event.target.value),
+          })
+      "
     />
     <MapValueInput
       label="Latitud"
-      v-model="latitud"
-      @input="(value) => $emit('update:latitud', value)"
-    /> -->
+      :value="latitud"
+      @callback="
+        (event) =>
+          $emit('callback', {
+            name: 'latitud',
+            value: parseFloat(event.target.value),
+          })
+      "
+    />
   </div>
 </template>
