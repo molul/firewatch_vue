@@ -7,14 +7,18 @@ export default defineComponent({
   props: {
     value: Number,
     label: String,
+    full: Boolean,
   },
   setup() {},
 });
 </script>
 
 <template>
-  <div class="flex gap-2 items-center">
-    <div class="w-20 md:w-auto">{{ label }}</div>
+  <div
+    class="flex gap-2 items-center md:w-auto"
+    :class="{ 'w-full': full == true, 'w-1/2': full == false }"
+  >
+    <div class="w-auto min-w-[60px] text-right">{{ label }}</div>
     <div class="w-full md:w-auto">
       <input
         :value="value"
