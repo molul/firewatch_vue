@@ -30,7 +30,7 @@ export default defineComponent({
     //******************************************
     const data = null;
     const page = ref(1);
-    const limit = ref(20);
+    const limit = ref(50);
     const provincia = ref("");
     const situacion = ref("");
     const nivel = ref("");

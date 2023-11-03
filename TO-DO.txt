@@ -3,7 +3,14 @@ NEXT:
 	Cuando se pone un filtro de lo que sea, page tiene que volver a 1
 
 	Poner dropdowns bonitos
-	
+
+	Poner iconos de fuego animados
+
+	Hacer radio como sider
+
+	Meter Filtros de longitud y demás dentro de filters
+
+	Selector de número de fuegos por página
 
 	Componentizar bien todo
 

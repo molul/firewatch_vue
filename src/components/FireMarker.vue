@@ -3,10 +3,10 @@
 <template>
   <div class="">
     <img
-      src="../assets/fire.png"
-      width="30"
-      height="30"
-      class="-translate-x-[15px] -translate-y-[30px]"
+      src="../assets/fire.gif"
+      width="40"
+      height="40"
+      class="-translate-x-[20px] -translate-y-[40px]"
     />
   </div>
 </template>
