@@ -4,8 +4,6 @@ NEXT:
 
 	Poner dropdowns bonitos
 
-	Poner iconos de fuego animados
-
 	Hacer radio como sider
 
 	Meter Filtros de longitud y demás dentro de filters
