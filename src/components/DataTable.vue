@@ -13,15 +13,15 @@ export default {
 </script>
 
 <template>
-  <div v-if="visible" class="overflow-scroll">
+  <div v-if="visible" class="overflow-x-scroll">
     <div v-if="fields.length > 0" class="">
-      <table class="table-auto">
+      <table class="table-auto rounded-md overflow-hidden">
         <thead class="border-b border-zinc-700">
-          <tr>
+          <tr class="">
             <th
               v-for="(field, index) in fields"
               :key="index"
-              class="bg-white whitespace-nowrap text-zinc-700 px-4 py-3 text-sm align-top uppercase"
+              class="bg-zinc-600 whitespace-nowrap text-white px-4 py-3 text-sm align-top uppercase"
             >
               {{ field.label }}
             </th>
@@ -32,8 +32,8 @@ export default {
             v-for="(record, i) in records"
             :key="i"
             :class="{
-              'bg-red-300': record['situacion_actual'] === 'ACTIVO',
-              'bg-orange-300': record['situacion_actual'] === 'CONTROLADO',
+              'bg-red-500 text-white': record['situacion_actual'] === 'ACTIVO',
+              'bg-amber-300': record['situacion_actual'] === 'CONTROLADO',
               'bg-green-300': record['situacion_actual'] === 'EXTINGUIDO',
             }"
           >

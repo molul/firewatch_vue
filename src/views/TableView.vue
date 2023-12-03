@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import DataTable from "../components/DataTable.vue";
-import NavigationButtons from "../components/NavigationButtons.vue";
 import { useFields, useRecords } from "../composables/fetchData";
 import Title from "../components/Title.vue";
 import Filters from "../components/Filters.vue";
-import { GoogleMap, Marker, CustomMarker, Circle } from "vue3-google-map";
-import PageInfo from "../components/PageInfo.vue";
 import InfoAndNavigation from "../components/InfoAndNavigation.vue";
 
 //******************************************

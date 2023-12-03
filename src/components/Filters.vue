@@ -15,8 +15,8 @@ const selectedProvince = ref("");
 const selectedCurrentSituation = ref("");
 const selectedLevel = ref("");
 const selectedCause = ref("");
-const nombreFiltro = ref("");
-const savePresetMessage = ref("");
+// const nombreFiltro = ref("");
+// const savePresetMessage = ref("");
 
 const filters = ref<Option[]>([]);
 const filterPreffix = "cfp_"; // that's "cesefor filter preset" ;)
@@ -26,39 +26,39 @@ const updateCause = (value: string) => {
   selectedCause.value = value;
 };
 
-const guardarFiltro = () => {
-  if (nombreFiltro.value === "") {
-    savePresetMessage.value =
-      nombreFiltro.value === ""
-        ? "Por favor, escriba un nombre para el filtro"
-        : "";
-  } else {
-    savePresetMessage.value = "";
-    if (
-      selectedProvince.value === "" &&
-      selectedCurrentSituation.value === "" &&
-      selectedLevel.value === "" &&
-      selectedCause.value === ""
-    ) {
-      savePresetMessage.value =
-        "El preset no se ha guardado porque no se ha seleccionado ninguna opción en los filtros";
-    } else {
-      savePresetMessage.value = "";
-      const datos = {
-        provincia: selectedProvince.value,
-        situacion: selectedCurrentSituation.value,
-        nivel: selectedLevel.value,
-        causa: selectedCause.value,
-      };
+// const guardarFiltro = () => {
+//   if (nombreFiltro.value === "") {
+//     savePresetMessage.value =
+//       nombreFiltro.value === ""
+//         ? "Por favor, escriba un nombre para el filtro"
+//         : "";
+//   } else {
+//     savePresetMessage.value = "";
+//     if (
+//       selectedProvince.value === "" &&
+//       selectedCurrentSituation.value === "" &&
+//       selectedLevel.value === "" &&
+//       selectedCause.value === ""
+//     ) {
+//       savePresetMessage.value =
+//         "El preset no se ha guardado porque no se ha seleccionado ninguna opción en los filtros";
+//     } else {
+//       savePresetMessage.value = "";
+//       const datos = {
+//         provincia: selectedProvince.value,
+//         situacion: selectedCurrentSituation.value,
+//         nivel: selectedLevel.value,
+//         causa: selectedCause.value,
+//       };
 
-      const datosJSON = JSON.stringify(datos);
+//       const datosJSON = JSON.stringify(datos);
 
-      localStorage.setItem(filterPreffix + nombreFiltro.value, datosJSON);
-      nombreFiltro.value = "";
-      loadFiltersFromLocalStorage();
-    }
-  }
-};
+//       localStorage.setItem(filterPreffix + nombreFiltro.value, datosJSON);
+//       nombreFiltro.value = "";
+//       loadFiltersFromLocalStorage();
+//     }
+//   }
+// };
 
 const loadFiltersFromLocalStorage = () => {
   const allLocalStorageEntries = { ...localStorage };
@@ -154,7 +154,7 @@ onMounted(() => {
         />
       </div>
       <!-- Save filter -->
-      <div>
+      <!-- <div>
         <div
           class="flex flex-col md:flex-row gap-2 items-start md:items-center justify-center"
         >
@@ -182,7 +182,7 @@ onMounted(() => {
         >
           {{ savePresetMessage }}
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
