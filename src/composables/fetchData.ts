@@ -132,7 +132,7 @@ export const useRecords = () => {
       records.value = recordsData.results;
       totalCount.value = recordsData.total_count;
       numPages.value = Math.ceil(totalCount.value / filters.limit);
-      console.log(records);
+      // console.log(records);
 
       // If radius was provided, it means we're in the
       // map view, and therefore we return the markers to
