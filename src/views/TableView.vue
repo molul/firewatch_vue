@@ -1,4 +1,4 @@
-<script lang="ts">
+<script setup lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
 import DataTable from "../components/DataTable.vue";
 import NavigationButtons from "../components/NavigationButtons.vue";
@@ -9,124 +9,92 @@ import { GoogleMap, Marker, CustomMarker, Circle } from "vue3-google-map";
 import PageInfo from "../components/PageInfo.vue";
 import InfoAndNavigation from "../components/InfoAndNavigation.vue";
 
-export default defineComponent({
-  name: "HomeView",
-  components: {
-    DataTable,
-    NavigationButtons,
-    Title,
-    Filters,
-    GoogleMap,
-    Marker,
-    Circle,
-    CustomMarker,
-    PageInfo,
-    InfoAndNavigation,
-  },
-  setup() {
-    //******************************************
-    // Records variables
-    //******************************************
-    const data = null;
-    const page = ref(1);
-    const limit = ref(20);
-    const provincia = ref("");
-    const situacion = ref("");
-    const nivel = ref("");
-    const causa = ref("");
+//******************************************
+// Records variables
+//******************************************
+const page = ref(1);
+const limit = ref(20);
+const provincia = ref("");
+const situacion = ref("");
+const nivel = ref("");
+const causa = ref("");
 
-    const { fields, fieldsError, loadFields } = useFields();
-    const { records, totalCount, numPages, recordsError, loadRecords } =
-      useRecords();
+const { fields, loadFields } = useFields();
+const { records, totalCount, numPages, loadRecords } = useRecords();
 
-    //******************************************
-    // Records methods
-    //******************************************
+//******************************************
+// Records methods
+//******************************************
 
-    //------------------------------------
-    // increasePage/decreasePage
-    //------------------------------------
-    // These functions update the "page" variable
-    // and queries the database again for a new load of records
-    //------------------------------------
-    const increasePage = (n: number) => {
-      page.value =
-        page.value + n < numPages.value ? page.value + n : numPages.value;
-      triggerLoadRecords();
-    };
-    const decreasePage = (n: number) => {
-      page.value = page.value - n > 1 ? page.value - n : 1;
-      triggerLoadRecords();
-    };
+//------------------------------------
+// increasePage/decreasePage
+//------------------------------------
+// These functions update the "page" variable
+// and queries the database again for a new load of records
+//------------------------------------
+const increasePage = (n: number) => {
+  page.value =
+    page.value + n < numPages.value ? page.value + n : numPages.value;
+  triggerLoadRecords();
+};
+const decreasePage = (n: number) => {
+  page.value = page.value - n > 1 ? page.value - n : 1;
+  triggerLoadRecords();
+};
 
-    //------------------------------------
-    // triggerLoadRecords
-    //------------------------------------
-    // Calls loadRecords again with the updated filters
-    //------------------------------------
-    const triggerLoadRecords = () => {
-      loadRecords({
-        page: page.value,
-        limit: limit.value,
-        provincia: provincia.value,
-        situacion: situacion.value,
-        nivel: nivel.value,
-        causa: causa.value,
-      });
-    };
+const goToFirstPage = () => {
+  page.value = 1;
+  triggerLoadRecords();
+};
+const goToLastPage = () => {
+  page.value = numPages.value;
+  triggerLoadRecords();
+};
 
-    //------------------------------------
-    // reloadRecords
-    //------------------------------------
-    // Updates the corresponding variable and triggers a new query
-    //------------------------------------
-    const reloadRecords = (data: { field: string; value: string }) => {
-      if (data.field === "provincia") {
-        provincia.value = data.value;
-      }
-      if (data.field === "situacion_actual") {
-        situacion.value = data.value;
-      }
-      if (data.field === "nivel_maximo_alcanzado") {
-        nivel.value = data.value;
-      }
-      if (data.field === "causa_probable") {
-        causa.value = data.value;
-      }
-      triggerLoadRecords();
-    };
+//------------------------------------
+// triggerLoadRecords
+//------------------------------------
+// Calls loadRecords again with the updated filters
+//------------------------------------
+const triggerLoadRecords = () => {
+  loadRecords({
+    page: page.value,
+    limit: limit.value,
+    provincia: provincia.value,
+    situacion: situacion.value,
+    nivel: nivel.value,
+    causa: causa.value,
+  });
+};
 
-    //******************************************
-    // OnMounted: loads fields and records after
-    // the component is mounted
-    //******************************************
-    onMounted(() => {
-      loadFields();
-      triggerLoadRecords();
-    });
+//------------------------------------
+// reloadRecords
+//------------------------------------
+// Updates the corresponding variable and triggers a new query
+//------------------------------------
+const reloadRecords = (data: { field: string; value: string }) => {
+  if (data.field === "provincia") {
+    provincia.value = data.value;
+  }
+  if (data.field === "situacion_actual") {
+    situacion.value = data.value;
+  }
+  if (data.field === "nivel_maximo_alcanzado") {
+    nivel.value = data.value;
+  }
+  if (data.field === "causa_probable") {
+    causa.value = data.value;
+  }
+  triggerLoadRecords();
+};
 
-    return {
-      fields,
-      fieldsError,
-      loadFields,
-      loadRecords,
-      records,
-      recordsError,
-      data,
-      page,
-      limit,
-      provincia,
-      situacion,
-      totalCount,
-      numPages,
-      increasePage,
-      decreasePage,
-      reloadRecords,
-      triggerLoadRecords,
-      nivel,
-      causa,
-    };
-  },
+//******************************************
+// OnMounted: loads fields and records after
+// the component is mounted
+//******************************************
+onMounted(() => {
+  loadFields();
+  triggerLoadRecords();
 });
 </script>
 
@@ -142,8 +110,10 @@ export default defineComponent({
       :page="page"
       :num-pages="numPages"
       :total-count="totalCount"
-      @increase-page="(n) => increasePage(n)"
-      @decrease-page="(n) => decreasePage(n)"
+      @goToFirstPage="() => goToFirstPage()"
+      @goToLastPage="() => goToLastPage()"
+      @increasePage="(n) => increasePage(n)"
+      @decreasePage="(n) => decreasePage(n)"
       :visible="records != null"
       position="top"
     />
@@ -159,8 +129,10 @@ export default defineComponent({
       :page="page"
       :num-pages="numPages"
       :total-count="totalCount"
-      @increase-page="(n) => increasePage(n)"
-      @decrease-page="(n) => decreasePage(n)"
+      @goToFirstPage="() => goToFirstPage()"
+      @goToLastPage="() => goToLastPage()"
+      @increasePage="(n) => increasePage(n)"
+      @decreasePage="(n) => decreasePage(n)"
       :visible="records != null"
       position="bottom"
     />

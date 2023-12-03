@@ -25,8 +25,10 @@ export default defineComponent({
     >
       <PageInfo :page="page" :num-pages="numPages" :total-count="totalCount" />
       <NavigationButtons
-        @decrease-page="(n: number) => $emit('decrease-page', n)"
-        @increase-page="(n: number) => $emit('increase-page', n)"
+        @goToFirstPage="$emit('goToFirstPage')"
+        @goToLastPage="$emit('goToLastPage')"
+        @decreasePage="(n: number) => $emit('decreasePage', n)"
+        @increasePage="(n: number) => $emit('increasePage', n)"
       />
     </div>
   </div>

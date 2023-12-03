@@ -2,15 +2,14 @@ NEXT:
 
 	Cuando se pone un filtro de lo que sea, page tiene que volver a 1
 
-	Poner dropdowns bonitos
-
-	Hacer radio como sider
+	Vuetify:
+		Poner dropdowns bonitos
+		Hacer radio como sider
+		Selector de número de fuegos por página
 
 	Meter Filtros de longitud y demás dentro de filters
 
-	Selector de número de fuegos por página
-
-	Componentizar bien todo
+	Terminar de componentizar todo
 
 	Intentar cargar preset
 

@@ -9,11 +9,23 @@ export default {
 
 <template>
   <div class="flex justify-center gap-2 flex-wrap">
-    <NavigationButton @callback="$emit('decrease-page', 50)" label="-50" />
-    <NavigationButton @callback="$emit('decrease-page', 10)" label="-10" />
-    <NavigationButton @callback="$emit('decrease-page', 1)" label="<" />
-    <NavigationButton @callback="$emit('increase-page', 1)" label=">" />
-    <NavigationButton @callback="$emit('increase-page', 10)" label="+10" />
-    <NavigationButton @callback="$emit('increase-page', 50)" label="+50" />
+    <NavigationButton
+      @callback="$emit('goToFirstPage')"
+      icon="ic:round-first-page"
+    />
+    <NavigationButton @callback="$emit('decreasePage', 20)" label="-20" />
+    <NavigationButton
+      @callback="$emit('decreasePage', 1)"
+      icon="ic:round-navigate-before"
+    />
+    <NavigationButton
+      @callback="$emit('increasePage', 1)"
+      icon="ic:round-navigate-next"
+    />
+    <NavigationButton @callback="$emit('increasePage', 20)" label="+20" />
+    <NavigationButton
+      @callback="$emit('goToLastPage', 50)"
+      icon="ic:round-last-page"
+    />
   </div>
 </template>

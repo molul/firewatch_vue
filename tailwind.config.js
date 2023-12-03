@@ -1,13 +1,17 @@
 /** @type {import('tailwindcss').Config} */
+const colors = require("tailwindcss/colors");
 export default {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
-        primary: "#febf00",
-        "primary-light": "#facc43",
-        secondary: "#00542e",
-        "secondary-light": "#b0c600",
+        primary: colors.amber["300"],
+        "primary-light": colors.amber["200"],
+        secondary: colors.green["900"],
+        "secondary-light": colors.green["800"],
+      },
+      fontFamily: {
+        main: '"Proximanova"',
       },
     },
   },
