@@ -1,4 +1,3 @@
-import { closestOnSegment } from "ol/coordinate";
 import { ref } from "vue";
 
 const apiURL =
