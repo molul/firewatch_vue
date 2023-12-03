@@ -47,7 +47,7 @@ const closeInfo = () => {
             class="text-red-600 rounded-full p-0.5"
           />
         </div>
-        <div>
+        <div class="text-xs md:text-base">
           Esta aplicación sirve para monitorizar en tiempo real los incendios
           reportados en la comunidad de Castilla y León a través de los datos
           registrados en
